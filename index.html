@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steve Huang个人网站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        .sidebar-item:hover {
+            background-color: #262626;
+            transform: translateX(5px);
+        }
+        .sidebar-item.active {
+            background-color: #404040;
+            border-left: 3px solid #fff;
+        }
+        
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .page-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #fff;
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #171717;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404040;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #525252;
+        }
+    </style>
+</head>
+<body class="h-screen overflow-hidden">
+
+    <!-- 桌面端：左侧边栏 | 移动端：顶部导航 -->
+    <div class="flex h-full flex-col lg:flex-row">
+        
+        <!-- 导航栏/侧边栏 -->
+        <nav id="sidebar" class="bg-neutral-900 border-r border-neutral-800 lg:w-64 w-full lg:h-full flex-shrink-0 flex flex-col">
+            <!-- Logo/名字区域 -->
+            <div class="p-6 border-b border-neutral-800">
+                <h1 class="text-2xl font-bold tracking-wider text-white" data-i18n="siteName">YOUR NAME</h1>
+                <p class="text-neutral-400 text-sm mt-1" data-i18n="siteSubtitle">Developer / Designer</p>
+            </div>
+
+            <!-- 导航链接 -->
+            <div class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1 px-3 flex lg:block overflow-x-auto lg:overflow-visible whitespace-nowrap lg:whitespace-normal">
+                    <li class="inline-block lg:block mr-2 lg:mr-0">
+                        <button onclick="showPage('home')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3 active" data-page="home">
+                            <i class="fas fa-home w-5"></i>
+                            <span data-i18n="nav.home">首页</span>
+                        </button>
+                    </li>
+                    <li class="inline-block lg:block mr-2 lg:mr-0">
+                        <button onclick="showPage('about')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="about">
+                            <i class="fas fa-user w-5"></i>
+                            <span data-i18n="nav.about">关于</span>
+                        </button>
+                    </li>
+                    <li class="inline-block lg:block mr-2 lg:mr-0">
+                        <button onclick="showPage('works')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="works">
+                            <i class="fas fa-briefcase w-5"></i>
+                            <span data-i18n="nav.works">作品</span>
+                        </button>
+                    </li>
+                    <li class="inline-block lg:block mr-2 lg:mr-0">
+                        <button onclick="showPage('blog')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="blog">
+                            <i class="fas fa-pen-nib w-5"></i>
+                            <span data-i18n="nav.blog">文章</span>
+                        </button>
+                    </li>
+                    <li class="inline-block lg:block">
+                        <button onclick="showPage('contact')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="contact">
+                            <i class="fas fa-envelope w-5"></i>
+                            <span data-i18n="nav.contact">联系</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 语言切换 -->
+            <div class="p-4 border-t border-neutral-800">
+                <button onclick="toggleLanguage()" class="w-full py-2 px-4 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-globe"></i>
+                    <span id="langBtn">English</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 overflow-y-auto bg-black relative">
+            
+            <!-- ==================== 首页 ==================== -->
+            <section id="home" class="page-section active min-h-full p-8 lg:p-16 flex flex-col justify-center">
+                <div class="max-w-4xl">
+                    <!-- 【填写位置1】首页大标题 -->
+                    <h2 class="text-5xl lg:text-7xl font-bold mb-6 text-white tracking-tight" data-i18n="home.title">
+                        Steve Huang
+                    </h2>
+                    <!-- 【填写位置2】首页副标题/简介 -->
+                    <p class="text-xl lg:text-2xl text-neutral-400 mb-8 leading-relaxed" data-i18n="home.subtitle">
+                        欢迎访问Steve的个人网站！
+                    </p>
+                </div>
+            </section>
+
+            <!-- ==================== 关于页面 ==================== -->
+            <section id="about" class="page-section min-h-full p-8 lg:p-16">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-12 text-white" data-i18n="about.title">关于我</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-start">
+                        <!-- 【填写位置5】个人照片 -->
+                        <div class="aspect-square bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800">
+                            <img src="img/profile.jpg" alt="Profile" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity">
+                            <!-- 提示：将 src 替换为你的图片链接，或删除 img 标签使用背景色占位 -->
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <!-- 【填写位置6】详细介绍 -->
+                            <div class="prose prose-invert">
+                                <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p1">
+                                    在这里写第一段自我介绍，包括你的背景、教育经历或职业历程。
+                                </p>
+                                <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p2">
+                                    在这里写第二段，描述你的专业技能、工作方式或独特价值主张。
+                                </p>
+                                <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p3">
+                                    在这里写第三段，谈谈你的兴趣爱好、职业目标或个人哲学。
+                                </p>
+                            </div>
+
+                            <!-- 【填写位置7】技能标签 -->
+                            <div class="pt-6">
+                                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4" data-i18n="about.skills">爱好</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">HTML</span>
+                                    <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">英语</span>
+                                    <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">Minecraft</span>
+                                    <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">政治</span>
+                                    <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">计算机</span>
+                                    <!-- 添加更多技能标签 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 作品展示 ==================== -->
+            <section id="works" class="page-section min-h-full p-8 lg:p-16">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="works.title">作品展示</h2>
+                    <p class="text-neutral-400 mb-12" data-i18n="works.subtitle">精选项目与创作</p>
+
+                    <!-- 【填写位置9】作品网格 -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <!-- 作品项目1 -->
+                        <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
+                            <div class="aspect-video bg-neutral-800 overflow-hidden">
+                                <img src="PROJECT1_IMAGE_URL" alt="Project 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 group-hover:text-white transition-colors" data-i18n="works.p1.title">项目名称 1</h3>
+                                <p class="text-neutral-400 text-sm mb-4 line-clamp-2" data-i18n="works.p1.desc">项目简短描述，介绍技术栈和核心功能。</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">React</span>
+                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Node.js</span>
+                                </div>
+                                <a href="#" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
+                                    <span data-i18n="works.view">查看详情</span>
+                                    <i class="fas fa-arrow-right text-xs"></i>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 作品项目2 -->
+                        <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
+                            <div class="aspect-video bg-neutral-800 overflow-hidden">
+                                <img src="PROJECT2_IMAGE_URL" alt="Project 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2" data-i18n="works.p2.title">项目名称 2</h3>
+                                <p class="text-neutral-400 text-sm mb-4 line-clamp-2" data-i18n="works.p2.desc">项目简短描述。</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Python</span>
+                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">AI</span>
+                                </div>
+                                <a href="#" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
+                                    <span data-i18n="works.view">查看详情</span>
+                                    <i class="fas fa-arrow-right text-xs"></i>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 作品项目3 -->
+                        <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
+                            <div class="aspect-video bg-neutral-800 overflow-hidden">
+                                <img src="PROJECT3_IMAGE_URL" alt="Project 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2" data-i18n="works.p3.title">项目名称 3</h3>
+                                <p class="text-neutral-400 text-sm mb-4 line-clamp-2" data-i18n="works.p3.desc">项目简短描述。</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Design</span>
+                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Figma</span>
+                                </div>
+                                <a href="#" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
+                                    <span data-i18n="works.view">查看详情</span>
+                                    <i class="fas fa-arrow-right text-xs"></i>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 【提示】复制上述 article 结构添加更多作品 -->
+                        
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 文章更新 ==================== -->
+            <section id="blog" class="page-section min-h-full p-8 lg:p-16">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="blog.title">最新文章</h2>
+                    <p class="text-neutral-400 mb-12" data-i18n="blog.subtitle">思考、教程与分享</p>
+
+                    <div class="space-y-8">
+                        <!-- 【填写位置10】文章列表 -->
+                        
+                        <!-- 文章1 -->
+                        <article class="group border-b border-neutral-800 pb-8">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                                <span class="text-sm text-neutral-500">2024年1月15日</span>
+                                <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">技术</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-neutral-300 transition-colors cursor-pointer" data-i18n="blog.a1.title">
+                                文章标题示例：如何构建现代化的Web应用
+                            </h3>
+                            <p class="text-neutral-400 mb-4 line-clamp-2" data-i18n="blog.a1.excerpt">
+                                文章摘要：在这里写下文章的简短介绍，吸引读者点击阅读全文。可以描述文章的核心观点或解决的问题。
+                            </p>
+                            <a href="#" class="text-sm text-neutral-300 hover:text-white inline-flex items-center gap-2">
+                                <span data-i18n="blog.readMore">阅读全文</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </article>
+
+                        <!-- 文章2 -->
+                        <article class="group border-b border-neutral-800 pb-8">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                                <span class="text-sm text-neutral-500">2024年1月10日</span>
+                                <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">设计</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-neutral-300 transition-colors cursor-pointer" data-i18n="blog.a2.title">
+                                设计系统的艺术：从0到1构建组件库
+                            </h3>
+                            <p class="text-neutral-400 mb-4 line-clamp-2" data-i18n="blog.a2.excerpt">
+                                文章摘要内容...
+                            </p>
+                            <a href="#" class="text-sm text-neutral-300 hover:text-white inline-flex items-center gap-2">
+                                <span data-i18n="blog.readMore">阅读全文</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </article>
+
+                        <!-- 文章3 -->
+                        <article class="group border-b border-neutral-800 pb-8">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                                <span class="text-sm text-neutral-500">2024年1月5日</span>
+                                <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">随笔</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-neutral-300 transition-colors cursor-pointer" data-i18n="blog.a3.title">
+                                远程工作三年的心得与反思
+                            </h3>
+                            <p class="text-neutral-400 mb-4 line-clamp-2" data-i18n="blog.a3.excerpt">
+                                文章摘要内容...
+                            </p>
+                            <a href="#" class="text-sm text-neutral-300 hover:text-white inline-flex items-center gap-2">
+                                <span data-i18n="blog.readMore">阅读全文</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </article>
+
+                        <!-- 【提示】复制 article 结构添加更多文章 -->
+                    </div>
+
+                    <!-- 【填写位置11】分页或加载更多 -->
+                    <div class="mt-12 text-center">
+                        <button class="px-6 py-3 border border-neutral-700 rounded-full hover:bg-neutral-900 transition-colors text-sm" data-i18n="blog.loadMore">
+                            加载更多文章
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 联系方式 ==================== -->
+            <section id="contact" class="page-section min-h-full p-8 lg:p-16 flex flex-col justify-center">
+                <div class="max-w-4xl mx-auto w-full">
+                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="contact.title">联系我</h2>
+                    <p class="text-neutral-400 mb-12" data-i18n="contact.subtitle">有项目合作或想法交流？随时联系我</p>
+
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- 联系信息 -->
+                        <div class="space-y-8">
+                            <!-- 【填写位置12】直接联系方式 -->
+                            <div class="space-y-4">
+                                <a href="mailto:your.email@example.com" class="flex items-center gap-4 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors group">
+                                    <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center group-hover:bg-neutral-700 transition-colors">
+                                        <i class="fas fa-envelope text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-neutral-500" data-i18n="contact.email">邮箱</div>
+                                        <div class="font-semibold">stevehuang11711@outlook.com</div>
+                                    </div>
+                                </a>
+
+                                <a href="tel:+8615846952919" class="flex items-center gap-4 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors group">
+                                    <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center group-hover:bg-neutral-700 transition-colors">
+                                        <i class="fas fa-phone text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-neutral-500" data-i18n="contact.phone">电话</div>
+                                        <div class="font-semibold">+86 158 4605 2919</div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- 【填写位置13】社交媒体网格 -->
+                            <div>
+                                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4" data-i18n="contact.social">社交媒体</h3>
+                                <div class="grid grid-cols-4 gap-4">
+                                    <!-- 微信 -->
+                                    <a href="weixin://dl/chat?stvhuang11711" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-green-600 hover:text-green-500 transition-all group">
+                                        <i class="fab fa-weixin text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">微信</span>
+                                    </a>
+                                    
+                                    <!-- QQ -->
+                                    <a href="http://wpa.qq.com/msgrd?v=3&uin=3759364351&site=qq&menu=yes" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-500 hover:text-blue-400 transition-all group">
+                                        <i class="fab fa-qq text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">QQ</span>
+                                    </a>
+                                    
+                                    <!-- B站 -->
+                                    <a href="https://space.bilibili.com/YOUR_BILIBILI_ID" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-pink-400 hover:text-pink-400 transition-all group">
+                                        <i class="fas fa-tv text-2xl"></i> <!-- B站没有官方图标，使用TV代替或使用自定义SVG -->
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">B站</span>
+                                    </a>
+                                    
+                                    <!-- 知乎 -->
+                                    <a href="https://www.zhihu.com/people/YOUR_ZHIHU_ID" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-400 hover:text-blue-300 transition-all group">
+                                        <i class="fas fa-graduation-cap text-2xl"></i> <!-- 知乎没有官方FA图标，使用学士帽代替 -->
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">知乎</span>
+                                    </a>
+                                    
+                                    <!-- GitHub -->
+                                    <a href="https://github.com/h11711" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-purple-400 hover:text-purple-400 transition-all group">
+                                        <i class="fab fa-github text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">GitHub</span>
+                                    </a>
+                                    
+                                    <!-- X (Twitter) -->
+                                    <a href="https://x.com/YOUR_X_USERNAME" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-gray-400 hover:text-gray-200 transition-all group">
+                                        <i class="fab fa-x-twitter text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">X</span>
+                                    </a>
+                                    
+                                    <!-- Facebook -->
+                                    <a href="https://facebook.com/YOUR_FB_USERNAME" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-600 hover:text-blue-500 transition-all group">
+                                        <i class="fab fa-facebook-f text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Facebook</span>
+                                    </a>
+                                    
+                                    <!-- Instagram -->
+                                    <a href="https://instagram.com/YOUR_IG_USERNAME" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-pink-500 hover:text-pink-500 transition-all group">
+                                        <i class="fab fa-instagram text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Instagram</span>
+                                    </a>
+                                    
+                                    <!-- YouTube -->
+                                    <a href="https://youtube.com/@YOUR_YT_CHANNEL" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-red-600 hover:text-red-500 transition-all group">
+                                        <i class="fab fa-youtube text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">YouTube</span>
+                                    </a>
+                                    
+                                    <!-- Twitch -->
+                                    <a href="https://twitch.tv/YOUR_TWITCH_USERNAME" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-purple-500 hover:text-purple-400 transition-all group">
+                                        <i class="fab fa-twitch text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Twitch</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // ==================== 多语言配置 ====================
+        // 【填写位置15】翻译内容配置
+        const translations = {
+            zh: {
+                siteName: "Steve Huang的个人网站",
+                siteSubtitle: "",
+                nav: {
+                    home: "首页",
+                    about: "关于",
+                    works: "作品",
+                    blog: "文章",
+                    contact: "联系"
+                },
+                home: {
+                    title: "Steve Huang",
+                    subtitle: "欢迎访问Steve的个人网站！",
+                },
+                about: {
+                    title: "关于我",
+                    p1: "在这里写第一段自我介绍，包括你的背景、教育经历或职业历程。",
+                    p2: "在这里写第二段，描述你的专业技能、工作方式或独特价值主张。",
+                    p3: "在这里写第三段，谈谈你的兴趣爱好、职业目标或个人哲学。",
+                    skills: "技能专长",
+                    experience: "经历",
+                    job1: { title: "职位名称", company: "公司名称" },
+                    job2: { title: "职位名称", company: "公司名称" }
+                },
+                works: {
+                    title: "作品展示",
+                    subtitle: "精选项目与创作",
+                    view: "查看详情",
+                    p1: { title: "项目名称 1", desc: "项目简短描述，介绍技术栈和核心功能。" },
+                    p2: { title: "项目名称 2", desc: "项目简短描述。" },
+                    p3: { title: "项目名称 3", desc: "项目简短描述。" }
+                },
+                blog: {
+                    title: "最新文章",
+                    subtitle: "思考、教程与分享",
+                    readMore: "阅读全文",
+                    loadMore: "加载更多文章",
+                    a1: { 
+                        title: "文章标题示例：如何构建现代化的Web应用", 
+                        excerpt: "文章摘要：在这里写下文章的简短介绍，吸引读者点击阅读全文。可以描述文章的核心观点或解决的问题。" 
+                    },
+                    a2: { 
+                        title: "设计系统的艺术：从0到1构建组件库", 
+                        excerpt: "文章摘要内容..." 
+                    },
+                    a3: { 
+                        title: "远程工作三年的心得与反思", 
+                        excerpt: "文章摘要内容..." 
+                    }
+                },
+                contact: {
+                    title: "联系我",
+                    subtitle: "有项目合作或想法交流？随时联系我",
+                    email: "邮箱",
+                    phone: "电话",
+                    social: "社交媒体",
+                    form: {
+                        title: "发送消息",
+                        name: "姓名",
+                        email: "邮箱",
+                        message: "消息",
+                        send: "发送消息"
+                    }
+                }
+            },
+            en: {
+                siteName: "Steve Huang's Personal Website",
+                siteSubtitle: "",
+                nav: {
+                    home: "Home",
+                    about: "About",
+                    works: "Works",
+                    blog: "Blog",
+                    contact: "Contact"
+                },
+                home: {
+                    title: "Steve Huang",
+                    subtitle: "Welcome To My Website！",
+                },
+                about: {
+                    title: "About Me",
+                    p1: "Write your first paragraph of self-introduction here, including your background, education, or career journey.",
+                    p2: "Write the second paragraph here, describing your professional skills, working style, or unique value proposition.",
+                    p3: "Write the third paragraph here, talking about your hobbies, career goals, or personal philosophy.",
+                    skills: "Skills",
+                    experience: "Experience",
+                    job1: { title: "Job Title", company: "Company Name" },
+                    job2: { title: "Job Title", company: "Company Name" }
+                },
+                works: {
+                    title: "Selected Works",
+                    subtitle: "Featured projects and creations",
+                    view: "View Details",
+                    p1: { title: "Project Name 1", desc: "Brief project description, tech stack and key features." },
+                    p2: { title: "Project Name 2", desc: "Brief description." },
+                    p3: { title: "Project Name 3", desc: "Brief description." }
+                },
+                blog: {
+                    title: "Latest Articles",
+                    subtitle: "Thoughts, tutorials, and sharing",
+                    readMore: "Read More",
+                    loadMore: "Load More Articles",
+                    a1: { 
+                        title: "Article Title Example: Building Modern Web Apps", 
+                        excerpt: "Article excerpt: Write a brief introduction here to attract readers to click and read the full article." 
+                    },
+                    a2: { 
+                        title: "The Art of Design Systems", 
+                        excerpt: "Article excerpt..." 
+                    },
+                    a3: { 
+                        title: "Three Years of Remote Work: Lessons Learned", 
+                        excerpt: "Article excerpt..." 
+                    }
+                },
+                contact: {
+                    title: "Get in Touch",
+                    subtitle: "Have a project or idea? Let's talk",
+                    email: "Email",
+                    phone: "Phone",
+                    social: "Social Media",
+                    form: {
+                        title: "Send Message",
+                        name: "Name",
+                        email: "Email",
+                        message: "Message",
+                        send: "Send Message"
+                    }
+                }
+            }
+        };
+
+        let currentLang = 'zh';
+
+        // 切换语言
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            document.getElementById('langBtn').textContent = currentLang === 'zh' ? 'English' : '中文';
+            updateContent();
+        }
+
+        // 更新页面内容
+        function updateContent() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let value = translations[currentLang];
+                for (let k of keys) {
+                    if (value && value[k] !== undefined) {
+                        value = value[k];
+                    } else {
+                        value = undefined;
+                        break;
+                    }
+                }
+                if (value !== undefined) {
+                    if (typeof value === 'object') {
+                        // 处理嵌套对象（如 feature1.title）
+                        // 这里简化处理，实际应根据完整路径获取
+                    } else {
+                        el.textContent = value;
+                    }
+                }
+            });
+        }
+
+        // 页面切换功能
+        function showPage(pageName) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 显示目标页面
+            document.getElementById(pageName).classList.add('active');
+            
+            // 更新导航状态
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageName) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // 滚动到顶部
+            document.querySelector('main').scrollTop = 0;
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateContent();
+        });
+    </script>
+</body>
+</html>
