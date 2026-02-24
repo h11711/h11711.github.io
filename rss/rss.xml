@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="rss/rss-style.xsl"?>
+<rss version="2.0" 
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    
+    <channel>
+        <!-- 【填写位置1】站点基本信息 -->
+        <title>Steve的个人网站</title>
+        <link>https://stevehuang.eu.org</link>
+        <description>SteveHuang的个人网站</description>
+        <language>zh-CN</language>
+        <lastBuildDate>Tue, 24 Feb 2026 12:00:00 +0800</lastBuildDate>
+        <atom:link href="https://stevehuang.eu.org/rss/rss.xml" rel="self" type="application/rss+xml"/>
+        
+        <!-- 【填写位置2】站点图片（可选） -->
+        <image>
+            <url>https://yourdomain.com/images/logo.png</url>
+            <title>你的站点名称</title>
+            <link>https://yourdomain.com</link>
+            <width>144</width>
+            <height>144</height>
+        </image>
+        
+        <!-- 【填写位置3】作者信息 -->
+        <managingEditor>your.email@example.com (你的名字)</managingEditor>
+        <webMaster>your.email@example.com (你的名字)</webMaster>
+        
+        <!-- 【填写位置4】版权信息 -->
+        <copyright>© 2024 你的名字 All Rights Reserved</copyright>
+        
+        <!-- 【填写位置5】分类/标签 -->
+        <category>技术</category>
+        <category>编程</category>
+        <category>生活</category>
+        
+        <!-- 【填写位置6】文章列表 - 每篇文章一个 item -->
+        
+        <!-- 文章 1（最新） -->
+        <item>
+            <title>文章标题示例：如何构建高性能的 React 应用</title>
+            <link>https://yourdomain.com/articles/react-performance-guide.html</link>
+            <guid isPermaLink="true">https://yourdomain.com/articles/react-performance-guide.html</guid>
+            <pubDate>Mon, 15 Jan 2024 10:00:00 +0800</pubDate>
+            <author>your.email@example.com (你的名字)</author>
+            <category>React</category>
+            <category>前端性能</category>
+            <description><![CDATA[
+                文章摘要：在这里写入文章的简短描述，这段文字会显示在 RSS 阅读器中。建议控制在 150-200 字以内，概括文章核心观点。
+            ]]></description>
+            <content:encoded><![CDATA[
+                <!-- 可选：完整文章内容或更长的摘要 -->
+                <p>文章开篇内容...</p>
+                <p>继续阅读请访问：<a href="https://yourdomain.com/articles/react-performance-guide.html">原文链接</a></p>
+            ]]></content:encoded>
+        </item>
+        
+        <!-- 文章 2 -->
+        <item>
+            <title>设计系统的艺术：从0到1构建组件库</title>
+            <link>https://yourdomain.com/articles/design-system-guide.html</link>
+            <guid isPermaLink="true">https://yourdomain.com/articles/design-system-guide.html</guid>
+            <pubDate>Wed, 10 Jan 2024 14:30:00 +0800</pubDate>
+            <author>your.email@example.com (你的名字)</author>
+            <category>UI/UX</category>
+            <category>设计系统</category>
+            <description><![CDATA[
+                文章摘要：介绍如何从零开始构建一套完整的设计系统，包括色彩规范、字体系统、组件架构等核心内容。
+            ]]></description>
+        </item>
+        
+        <!-- 文章 3 -->
+        <item>
+            <title>远程工作三年的心得与反思</title>
+            <link>https://yourdomain.com/articles/remote-work-reflection.html</link>
+            <guid isPermaLink="true">https://yourdomain.com/articles/remote-work-reflection.html</guid>
+            <pubDate>Sun, 05 Jan 2024 09:15:00 +0800</pubDate>
+            <author>your.email@example.com (你的名字)</author>
+            <category>随笔</category>
+            <category>工作效率</category>
+            <description><![CDATA[
+                文章摘要：分享三年远程工作的经验总结，包括时间管理、沟通协作、工作与生活平衡等方面的思考。
+            ]]></description>
+        </item>
+        
+        <!-- 【提示】复制 item 节点添加更多文章，按时间倒序排列（最新的在前） -->
+        
+    </channel>
+</rss>
