@@ -33,6 +33,7 @@
         }
         .page-section.active {
             display: block;
+            min-height: 100vh;  /* 添加这行 */
         }
         
         @keyframes fadeIn {
@@ -126,7 +127,7 @@
         <main class="flex-1 overflow-y-auto bg-black relative">
             
             <!-- ==================== 首页 ==================== -->
-            <section id="home" class="page-section active min-h-full p-8 lg:p-16 flex flex-col justify-center">
+            <section id="home" class="page-section active p-8 lg:p-16 flex flex-col justify-center">
                 <div class="max-w-4xl">
                     <!-- 【填写位置1】首页大标题 -->
                     <h2 class="text-5xl lg:text-7xl font-bold mb-6 text-white tracking-tight" data-i18n="home.title">
@@ -140,7 +141,7 @@
             </section>
 
             <!-- ==================== 关于页面 ==================== -->
-            <section id="about" class="page-section min-h-full p-8 lg:p-16">
+            <section id="about" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto">
                     <h2 class="text-4xl font-bold mb-12 text-white" data-i18n="about.title">关于我</h2>
                     
@@ -183,7 +184,7 @@
             </section>
 
             <!-- ==================== 作品展示 ==================== -->
-            <section id="works" class="page-section min-h-full p-8 lg:p-16">
+            <section id="works" class="page-section p-8 lg:p-16">
                 <div class="max-w-6xl mx-auto">
                     <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="works.title">作品展示</h2>
                     <p class="text-neutral-400 mb-12" data-i18n="works.subtitle">精选项目与创作</p>
@@ -255,7 +256,7 @@
             </section>
 
             <!-- ==================== 文章更新 ==================== -->
-            <section id="blog" class="page-section min-h-full p-8 lg:p-16">
+            <section id="blog" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto">
                     <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="blog.title">最新文章</h2>
                     <p class="text-neutral-400 mb-12" data-i18n="blog.subtitle">思考、教程与分享</p>
@@ -330,7 +331,7 @@
             </section>
 
             <!-- ==================== 联系方式 ==================== -->
-            <section id="contact" class="page-section min-h-full p-8 lg:p-16 flex flex-col justify-center">
+            <section id="contact" class="page-section p-8 lg:p-16 flex flex-col justify-center">
                 <div class="max-w-4xl mx-auto w-full">
                     <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="contact.title">联系我</h2>
                     <p class="text-neutral-400 mb-12" data-i18n="contact.subtitle">有项目合作或想法交流？随时联系我</p>
