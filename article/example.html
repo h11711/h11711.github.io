@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章标题 - Steve Huang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+        
+        .prose-custom h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #fff; }
+        .prose-custom h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #fff; }
+        .prose-custom p { margin-bottom: 1rem; line-height: 1.8; color: #d4d4d4; }
+        .prose-custom ul { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .prose-custom li { margin-bottom: 0.5rem; color: #d4d4d4; }
+        .prose-custom code { background: #262626; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.875rem; color: #e5e5e5; }
+        .prose-custom pre { background: #171717; padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1rem; border: 1px solid #262626; }
+        .prose-custom pre code { background: none; padding: 0; }
+        .prose-custom blockquote { border-left: 3px solid #404040; padding-left: 1rem; margin: 1.5rem 0; color: #a3a3a3; font-style: italic; }
+        .prose-custom a { color: #a3a3a3; text-decoration: underline; text-underline-offset: 2px; }
+        .prose-custom a:hover { color: #fff; }
+        .prose-custom img { border-radius: 8px; margin: 1.5rem 0; max-width: 100%; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #171717; }
+        ::-webkit-scrollbar-thumb { background: #404040; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- 顶部导航 -->
+    <nav class="sticky top-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-neutral-800">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="../index.html" class="text-white font-bold text-lg hover:text-neutral-300 transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>Steve Huang
+            </a>
+            <div class="flex gap-4 text-sm text-neutral-400">
+                <a href="../index.html#blog" class="hover:text-white transition-colors">文章列表</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章主体 -->
+    <article class="max-w-3xl mx-auto px-6 py-12">
+        
+        <!-- 文章头部信息 -->
+        <header class="mb-12 border-b border-neutral-800 pb-8">
+            <!-- 标签 -->
+            <div class="flex gap-2 mb-4">
+                <span class="text-xs px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-neutral-400">技术</span>
+                <span class="text-xs px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-neutral-400">随笔</span>
+            </div>
+            
+            <!-- 标题 -->
+            <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                文章标题：在这里写下你的文章标题
+            </h1>
+            
+            <!-- 元信息 -->
+            <div class="flex items-center gap-4 text-sm text-neutral-500">
+                <span><i class="far fa-calendar mr-1"></i>2026年7月29日</span>
+                <span><i class="far fa-clock mr-1"></i>阅读约 5 分钟</span>
+            </div>
+        </header>
+
+        <!-- 正文内容 -->
+        <div class="prose-custom">
+            
+            <p>
+                这是文章的开头段落。用一两句话引出主题，吸引读者继续读下去。
+                可以是一个问题、一个场景，或者一个观点。
+            </p>
+
+            <h2>第一个小标题</h2>
+            
+            <p>
+                这里是正文内容。你可以写任何你想分享的东西：
+                技术教程、学习心得、项目复盘、读书笔记、生活感悟……
+            </p>
+
+            <p>
+                段落之间自然过渡，不要太长也不要太短。
+                一个段落 3-5 句话比较合适。
+            </p>
+
+            <h3>子标题（如果需要更细的划分）</h3>
+
+            <ul>
+                <li>列表项一：用无序列表展示要点</li>
+                <li>列表项二：每个点简洁明了</li>
+                <li>列表项三：不要写太长</li>
+            </ul>
+
+            <h2>代码示例</h2>
+
+            <p>如果你写技术文章，可以放代码块：</p>
+
+            <pre><code>// 这是一段示例代码
+function hello() {
+    console.log("Hello, World!");
+}
+
+hello();</code></pre>
+
+            <p>行内代码可以这样写：<code>console.log()</code>，适合提到函数名或命令。</p>
+
+            <h2>引用</h2>
+
+            <blockquote>
+                "这是一段引用。可以是名人名言，也可以是你在别处看到的好句子。"
+            </blockquote>
+
+            <p>引用后面继续你的论述。</p>
+
+            <h2>图片</h2>
+
+            <p>如果需要配图：</p>
+
+            <img src="../img/placeholder.jpg" alt="图片描述" class="w-full">
+
+            <p class="text-sm text-neutral-500 text-center -mt-4">图片说明文字</p>
+
+            <h2>总结</h2>
+
+            <p>
+                最后一段总结全文，可以呼应开头，也可以抛出一个问题让读者思考。
+                好的结尾让人印象深刻。
+            </p>
+
+        </div>
+
+        <!-- 文章底部 -->
+        <footer class="mt-16 pt-8 border-t border-neutral-800">
+            
+            <!-- 分享 -->
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-sm text-neutral-500">分享：</span>
+                <a href="#" class="text-neutral-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-neutral-400 hover:text-green-500 transition-colors"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="text-neutral-400 hover:text-blue-400 transition-colors"><i class="fab fa-zhihu"></i></a>
+            </div>
+
+            <!-- 上下篇导航 -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <a href="#" class="group p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors">
+                    <div class="text-xs text-neutral-500 mb-1">← 上一篇</div>
+                    <div class="text-white group-hover:text-neutral-300 transition-colors">上一篇文章标题</div>
+                </a>
+                <a href="#" class="group p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors text-right">
+                    <div class="text-xs text-neutral-500 mb-1">下一篇 →</div>
+                    <div class="text-white group-hover:text-neutral-300 transition-colors">下一篇文章标题</div>
+                </a>
+            </div>
+        </footer>
+
+    </article>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-neutral-800 mt-16 py-8 text-center text-sm text-neutral-600">
+        <p>© 2026 Steve Huang. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
