@@ -5,7 +5,7 @@
      xmlns:dc="http://purl.org/dc/elements/1.1/">
     
     <channel>
-        <!-- 【填写位置1】站点基本信息 -->
+        <!-- 站点基本信息 -->
         <title>Steve的个人网站</title>
         <link>https://stevehuang.eu.org</link>
         <description>SteveHuang的个人网站</description>
@@ -13,28 +13,19 @@
         <lastBuildDate>Tue, 24 Feb 2026 12:00:00 +0800</lastBuildDate>
         <atom:link href="https://stevehuang.eu.org/rss/rss.xml" rel="self" type="application/rss+xml"/>
         
-        <!-- 【填写位置2】站点图片（可选） -->
-        <image>
-            <url>https://yourdomain.com/images/logo.png</url>
-            <title>你的站点名称</title>
-            <link>https://yourdomain.com</link>
-            <width>144</width>
-            <height>144</height>
-        </image>
+        <!-- 作者 -->
+        <managingEditor>steveh11711@outlook.com (H-11711)</managingEditor>
+        <webMaster>steveh11711@outlook.com (Steve Huang)</webMaster>
         
-        <!-- 【填写位置3】作者信息 -->
-        <managingEditor>your.email@example.com (你的名字)</managingEditor>
-        <webMaster>your.email@example.com (你的名字)</webMaster>
+        <!-- 版权 -->
+        <copyright>© 2026 Steve Huang. All Rights Reserved.</copyright>
         
-        <!-- 【填写位置4】版权信息 -->
-        <copyright>© 2024 你的名字 All Rights Reserved</copyright>
-        
-        <!-- 【填写位置5】分类/标签 -->
+        <!-- 分类/标签 -->
         <category>技术</category>
         <category>编程</category>
         <category>生活</category>
         
-        <!-- 【填写位置6】文章列表 - 每篇文章一个 item -->
+        <!-- 文章列表 -->
         
         <!-- 文章 1（最新） -->
         <item>
