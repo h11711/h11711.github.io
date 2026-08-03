@@ -1,37 +1,1233 @@
-name: Deploy to GitHub Pages
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">艾宾浩斯词汇记忆</title>
+    <link rel="alternate" type="application/rss+xml" title="Steve Huang" href="https://stevehuang.eu.org/rss/rss.xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #171717;
+            --bg-card: #262626;
+            --bg-hover: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --border: #404040;
+            --border-light: #525252;
+            --accent: #ffffff;
+            --success: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+        
+        [data-theme="light"] {
+            --bg-primary: #fafafa;
+            --bg-secondary: #f5f5f5;
+            --bg-card: #ffffff;
+            --bg-hover: #f0f0f0;
+            --text-primary: #171717;
+            --text-secondary: #525252;
+            --text-muted: #a3a3a3;
+            --border: #e5e5e5;
+            --border-light: #d4d4d4;
+            --accent: #171717;
+            --success: #16a34a;
+            --warning: #ca8a04;
+            --danger: #dc2626;
+            --info: #2563eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', 'Noto Sans SC', sans-serif; 
+            background: var(--bg-primary); 
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+        
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .card:hover { transform: translateY(-2px); border-color: var(--border-light); }
+        
+        .btn { 
+            transition: all 0.2s; 
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn:active { transform: scale(0.96); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .input {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .input:focus { 
+            outline: none; 
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(128,128,128,0.1);
+        }
+        .input::placeholder { color: var(--text-muted); }
+        
+        .fade-in { animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in { animation: slideIn 0.3s ease; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .streak-flame { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            z-index: 200;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
+        
+        .wordbook-tab {
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+        .wordbook-tab.active {
+            background: var(--bg-card);
+            font-weight: 600;
+        }
+        .wordbook-tab:hover:not(.active) {
+            background: var(--bg-hover);
+        }
+        
+        .search-highlight {
+            background: rgba(234, 179, 8, 0.3);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
 
-on:
-  push:
-    branches: [main, master]
-  workflow_dispatch:
+    <!-- Toast 通知 -->
+    <div id="toast" class="toast" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);"></div>
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    <!-- 顶部导航 -->
+    <nav class="sticky top-0 z-50 border-b" style="background: rgba(var(--bg-secondary-rgb, 23,23,23), 0.85); backdrop-filter: blur(12px); border-color: var(--border);">
+        <div class="max-w-5xl mx-auto px-4 lg:px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="https://stevehuang.eu.org" class="text-lg font-bold hover:opacity-70 transition-opacity">←</a>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight" data-i18n="appName">艾宾浩斯词汇记忆</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- 词库选择 -->
+                <select id="wordbookSelect" onchange="switchWordbook(this.value)" class="input px-3 py-1.5 rounded-lg text-sm">
+                    <option value="custom" data-i18n="wordbookCustom">自定义</option>
+                    <option value="gaokao3500" data-i18n="wordbookGaokao">高考3500词</option>
+                    <option value="cet4" data-i18n="wordbookCet4">四级核心</option>
+                    <option value="cet6" data-i18n="wordbookCet6">六级核心</option>
+                </select>
+                
+                <!-- 语言切换 -->
+                <button onclick="toggleLanguage()" class="btn p-2 rounded-lg card text-sm" title="Switch Language">
+                    <span id="langIcon">🇺🇸</span>
+                </button>
+                
+                <!-- 主题切换 -->
+                <button onclick="toggleTheme()" class="btn p-2 rounded-lg card" title="Toggle Theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    <!-- 统计栏 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mt-6">
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <p class="text-sm" style="color: var(--text-muted)">
+                    <span id="dateDisplay"></span> · 
+                    <span data-i18n="dueToday">需复习</span> <span id="todayCount" class="font-bold text-lg">0</span> <span data-i18n="words">词</span>
+                </p>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl card streak-flame">
+                <span class="text-lg">🔥</span>
+                <span class="font-bold" id="streakCount">0</span>
+                <span class="text-xs" style="color: var(--text-muted)" data-i18n="days">天</span>
+            </div>
+        </div>
 
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        <!-- 统计卡片 -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold" style="color: var(--success)" id="knownCount">0</div>
+                <div class="text-xs mt-1" style="color: var(--text-muted)" data-i18n="known">认识</div>
+            </div>
+            <div class="card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold" style="color: var(--warning)" id="fuzzyCount">0</div>
+                <div class="text-xs mt-1" style="color: var(--text-muted)" data-i18n="fuzzy">模糊</div>
+            </div>
+            <div class="card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold" style="color: var(--danger)" id="forgotCount">0</div>
+                <div class="text-xs mt-1" style="color: var(--text-muted)" data-i18n="forgot">忘记</div>
+            </div>
+            <div class="card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold" style="color: var(--info)" id="accuracyRate">0%</div>
+                <div class="text-xs mt-1" style="color: var(--text-muted)" data-i18n="accuracy">正确率</div>
+            </div>
+        </div>
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+        <!-- 学习进度 -->
+        <div class="card rounded-xl p-4 mb-6">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium" data-i18n="learningProgress">学习进度</span>
+                <span class="text-sm" style="color: var(--text-muted)"><span id="masteredCount">0</span> / <span id="totalWordsCount">0</span> <span data-i18n="mastered">已掌握</span></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%; background: var(--success);"></div>
+            </div>
+        </div>
+    </section>
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
+    <!-- 图表 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-6">
+        <details class="group">
+            <summary class="cursor-pointer text-sm mb-3 flex items-center gap-2" style="color: var(--text-muted)">
+                <span>📊</span>
+                <span data-i18n="statsChart">学习统计（点击展开）</span>
+            </summary>
+            <div class="card rounded-2xl p-4">
+                <canvas id="statsChart" height="200"></canvas>
+            </div>
+        </details>
+    </section>
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    <!-- 添加单词 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-8">
+        <div class="card rounded-2xl p-5 lg:p-6">
+            <h2 class="text-base font-semibold mb-4 flex items-center gap-2">
+                <span>➕</span>
+                <span data-i18n="addWords">添加新单词</span>
+            </h2>
+            
+            <!-- 单个添加 -->
+            <div class="flex flex-col md:flex-row gap-3 mb-4">
+                <input type="text" id="wordInput" data-i18n-placeholder="placeholderWord" placeholder="单词，如：abandon" 
+                    class="input flex-1 px-4 py-3 rounded-xl">
+                <input type="text" id="meaningInput" data-i18n-placeholder="placeholderMeaning" placeholder="释义，如：放弃；抛弃" 
+                    class="input flex-1 px-4 py-3 rounded-xl">
+                <input type="text" id="exampleInput" data-i18n-placeholder="placeholderExample" placeholder="例句（可选）" 
+                    class="input flex-1 px-4 py-3 rounded-xl hidden md:block">
+                <button onclick="addWord()" class="btn px-6 py-3 bg-white text-black font-semibold rounded-xl hover:bg-neutral-200 whitespace-nowrap">
+                    <span data-i18n="add">添加</span>
+                </button>
+            </div>
+            
+            <!-- 批量导入 -->
+            <details>
+                <summary class="cursor-pointer text-sm mb-3 flex items-center gap-2" style="color: var(--text-muted)">
+                    <span>📥</span>
+                    <span data-i18n="bulkImport">批量导入（每行：单词=释义=例句）</span>
+                </summary>
+                <textarea id="bulkInput" rows="4" 
+                    placeholder="abandon=放弃；抛弃=He abandoned his car.&#10;ability=能力；才能=She has the ability to sing."
+                    class="input w-full px-4 py-3 rounded-xl mb-3 font-mono text-sm"></textarea>
+                <div class="flex gap-2">
+                    <button onclick="bulkImport()" class="btn flex-1 py-2.5 border rounded-xl text-sm hover:bg-neutral-800/50" style="border-color: var(--border);">
+                        <span data-i18n="import">导入</span>
+                    </button>
+                    <button onclick="document.getElementById('bulkInput').value=''" class="btn px-4 py-2.5 border rounded-xl text-sm hover:bg-neutral-800/50" style="border-color: var(--border); color: var(--text-muted);">
+                        <span data-i18n="clear">清空</span>
+                    </button>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- 搜索与筛选 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-4">
+        <div class="flex gap-2">
+            <div class="relative flex-1">
+                <input type="text" id="searchInput" oninput="renderAllWords()" data-i18n-placeholder="placeholderSearch" placeholder="搜索单词..." 
+                    class="input w-full pl-10 pr-4 py-2.5 rounded-xl text-sm">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2" style="color: var(--text-muted)">🔍</span>
+            </div>
+            <select id="filterSelect" onchange="renderAllWords()" class="input px-3 py-2.5 rounded-xl text-sm">
+                <option value="all" data-i18n="filterAll">全部</option>
+                <option value="due" data-i18n="filterDue">今日待复习</option>
+                <option value="new" data-i18n="filterNew">新单词</option>
+                <option value="mastered" data-i18n="filterMastered">已掌握</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- 今日复习 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-8">
+        <h2 class="text-base font-semibold mb-4 flex items-center gap-2">
+            <span>🎯</span>
+            <span data-i18n="todaysReview">今日复习</span>
+        </h2>
+        <div id="reviewList" class="space-y-3">
+            <!-- 动态生成 -->
+        </div>
+    </section>
+
+    <!-- 发音练习模态框 -->
+    <div id="pronounceModal" class="modal">
+        <div class="modal-content p-6 w-full max-w-md mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold" data-i18n="pronunciation">发音练习</h3>
+                <button onclick="closeModal('pronounceModal')" class="btn text-2xl" style="color: var(--text-muted);">&times;</button>
+            </div>
+            <div class="text-center py-8">
+                <div id="pronounceWord" class="text-3xl font-bold mb-2"></div>
+                <div id="pronounceMeaning" class="text-lg mb-6" style="color: var(--text-secondary)"></div>
+                <button onclick="speakCurrentWord()" class="btn w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style="background: var(--info); color: white;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <p class="text-sm" style="color: var(--text-muted)" data-i18n="clickToListen">点击收听发音</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据管理 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-8">
+        <details class="group">
+            <summary class="cursor-pointer text-sm mb-3 flex items-center gap-2" style="color: var(--text-muted)">
+                <span>⚙️</span>
+                <span data-i18n="dataManagement">数据管理</span>
+            </summary>
+            <div class="card rounded-2xl p-5 space-y-3">
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="exportData()" class="btn px-4 py-2 border rounded-lg text-sm hover:bg-neutral-800/50" style="border-color: var(--border);">
+                        <span data-i18n="exportJSON">导出 JSON</span>
+                    </button>
+                    <button onclick="exportCSV()" class="btn px-4 py-2 border rounded-lg text-sm hover:bg-neutral-800/50" style="border-color: var(--border);">
+                        <span data-i18n="exportCSV">导出 CSV</span>
+                    </button>
+                    <label class="btn px-4 py-2 border rounded-lg text-sm hover:bg-neutral-800/50 cursor-pointer" style="border-color: var(--border);">
+                        <span data-i18n="importFile">导入文件</span>
+                        <input type="file" id="importFile" accept=".json,.csv" onchange="importFile(this)" class="hidden">
+                    </label>
+                    <button onclick="resetData()" class="btn px-4 py-2 border rounded-lg text-sm hover:bg-red-900/30" style="border-color: var(--danger); color: var(--danger);">
+                        <span data-i18n="resetAll">重置所有数据</span>
+                    </button>
+                </div>
+                <p class="text-xs" style="color: var(--text-muted)" data-i18n="dataWarning">数据保存在浏览器本地，清除缓存会丢失。建议定期导出备份。</p>
+            </div>
+        </details>
+    </section>
+
+    <!-- 近期计划 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-8">
+        <details class="group">
+            <summary class="cursor-pointer text-sm mb-3 flex items-center gap-2" style="color: var(--text-muted)">
+                <span>📅</span>
+                <span data-i18n="futurePlan">未来7天复习计划</span>
+            </summary>
+            <div id="scheduleList" class="space-y-2 text-sm"></div>
+        </details>
+    </section>
+
+    <!-- 全部单词 -->
+    <section class="max-w-5xl mx-auto px-4 lg:px-6 mb-12">
+        <details class="group" open>
+            <summary class="cursor-pointer text-sm mb-3 flex items-center gap-2" style="color: var(--text-muted)">
+                <span>📋</span>
+                <span data-i18n="allWords">全部单词列表</span>
+            </summary>
+            <div id="allWords" class="space-y-2 text-sm max-h-96 overflow-y-auto"></div>
+        </details>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="max-w-5xl mx-auto px-4 lg:px-6 text-center text-xs pb-8" style="color: var(--text-muted)">
+        <p data-i18n="footerIntervals">艾宾浩斯间隔：1 → 2 → 4 → 7 → 15 → 30 天</p>
+        <p class="mt-1" data-i18n="footerTip">数据保存在浏览器本地，建议定期导出备份</p>
+        <p class="mt-2">
+            <a href="https://stevehuang.eu.org" style="color: var(--text-muted);">← <span data-i18n="backToHome">返回主页</span></a>
+        </p>
+    </footer>
+
+<script>
+// ==================== 多语言配置 ====================
+const i18n = {
+    zh: {
+        title: "艾宾浩斯词汇记忆",
+        appName: "艾宾浩斯词汇记忆",
+        wordbookCustom: "自定义",
+        wordbookGaokao: "高考3500词",
+        wordbookCet4: "四级核心",
+        wordbookCet6: "六级核心",
+        dueToday: "需复习",
+        words: "词",
+        days: "天",
+        known: "认识",
+        fuzzy: "模糊",
+        forgot: "忘记",
+        accuracy: "正确率",
+        learningProgress: "学习进度",
+        mastered: "已掌握",
+        statsChart: "学习统计（点击展开）",
+        addWords: "添加新单词",
+        placeholderWord: "单词，如：abandon",
+        placeholderMeaning: "释义，如：放弃；抛弃",
+        placeholderExample: "例句（可选）",
+        add: "添加",
+        bulkImport: "批量导入（每行：单词=释义=例句）",
+        import: "导入",
+        clear: "清空",
+        placeholderSearch: "搜索单词...",
+        filterAll: "全部",
+        filterDue: "今日待复习",
+        filterNew: "新单词",
+        filterMastered: "已掌握",
+        todaysReview: "今日复习",
+        pronunciation: "发音练习",
+        clickToListen: "点击收听发音",
+        dataManagement: "数据管理",
+        exportJSON: "导出 JSON",
+        exportCSV: "导出 CSV",
+        importFile: "导入文件",
+        resetAll: "重置所有数据",
+        dataWarning: "数据保存在浏览器本地，清除缓存会丢失。建议定期导出备份。",
+        futurePlan: "未来7天复习计划",
+        allWords: "全部单词列表",
+        footerIntervals: "艾宾浩斯间隔：1 → 2 → 4 → 7 → 15 → 30 天",
+        footerTip: "数据保存在浏览器本地，建议定期导出备份",
+        backToHome: "返回主页",
+        newWord: "新单词",
+        stage: "轮",
+        completed: "已完成",
+        nextReview: "下次",
+        reviewed: "已复习",
+        times: "次",
+        noWordsToday: "今天没有要复习的单词",
+        addNewTip: "添加新单词或明天再来",
+        confirmReset: "确定要重置所有数据吗？此操作不可恢复！",
+        importSuccess: "导入成功",
+        wordsImported: "个单词已导入",
+        emptyInput: "请填写单词和释义",
+        stageLabel: "第",
+        round: "轮"
+    },
+    en: {
+        title: "Spaced Repetition Vocabulary",
+        appName: "Spaced Repetition",
+        wordbookCustom: "Custom",
+        wordbookGaokao: "Gaokao 3500",
+        wordbookCet4: "CET-4 Core",
+        wordbookCet6: "CET-6 Core",
+        dueToday: "Due today",
+        words: "words",
+        days: "days",
+        known: "Known",
+        fuzzy: "Fuzzy",
+        forgot: "Forgot",
+        accuracy: "Accuracy",
+        learningProgress: "Progress",
+        mastered: "mastered",
+        statsChart: "Statistics (click to expand)",
+        addWords: "Add New Words",
+        placeholderWord: "Word, e.g. abandon",
+        placeholderMeaning: "Meaning, e.g. give up",
+        placeholderExample: "Example (optional)",
+        add: "Add",
+        bulkImport: "Bulk Import (word=meaning=example per line)",
+        import: "Import",
+        clear: "Clear",
+        placeholderSearch: "Search words...",
+        filterAll: "All",
+        filterDue: "Due Today",
+        filterNew: "New",
+        filterMastered: "Mastered",
+        todaysReview: "Today's Review",
+        pronunciation: "Pronunciation",
+        clickToListen: "Click to listen",
+        dataManagement: "Data Management",
+        exportJSON: "Export JSON",
+        exportCSV: "Export CSV",
+        importFile: "Import File",
+        resetAll: "Reset All Data",
+        dataWarning: "Data is stored locally. Clear browser cache will erase it. Export regularly.",
+        futurePlan: "Next 7 Days Plan",
+        allWords: "All Words",
+        footerIntervals: "Intervals: 1 → 2 → 4 → 7 → 15 → 30 days",
+        footerTip: "Data stored locally. Export regularly for backup.",
+        backToHome: "Back to Home",
+        newWord: "New",
+        stage: "round",
+        completed: "Completed",
+        nextReview: "Next",
+        reviewed: "Reviewed",
+        times: "times",
+        noWordsToday: "No words to review today",
+        addNewTip: "Add new words or come back tomorrow",
+        confirmReset: "Are you sure? This cannot be undone!",
+        importSuccess: "Import successful",
+        wordsImported: "words imported",
+        emptyInput: "Please fill in word and meaning",
+        stageLabel: "Round",
+        round: ""
+    }
+};
+
+let currentLang = localStorage.getItem('vocabLang') || 'zh';
+
+function t(key) {
+    return i18n[currentLang][key] || key;
+}
+
+function updateLanguage() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[currentLang][key]) el.textContent = i18n[currentLang][key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (i18n[currentLang][key]) el.placeholder = i18n[currentLang][key];
+    });
+    document.title = t('title');
+    document.getElementById('langIcon').textContent = currentLang === 'zh' ? '🇺🇸' : '🇨🇳';
+}
+
+function toggleLanguage() {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('vocabLang', currentLang);
+    updateLanguage();
+    render();
+}
+
+// ==================== 配置 ====================
+const INTERVALS = [1, 2, 4, 7, 15, 30];
+const MASTER_THRESHOLD = 4; // 认识4次以上视为掌握
+
+// 内置词库
+const WORDBOOKS = {
+    gaokao3500: [
+        {word: "abandon", meaning: "放弃；抛弃", example: "He abandoned his car in the snow."},
+        {word: "ability", meaning: "能力；才能", example: "She has the ability to sing well."},
+        {word: "absolute", meaning: "绝对的；完全的", example: "I have absolute confidence in you."},
+        {word: "absorb", meaning: "吸收；使全神贯注", example: "Plants absorb carbon dioxide."},
+        {word: "abstract", meaning: "抽象的；摘要", example: "Truth and beauty are abstract concepts."},
+        {word: "abundant", meaning: "丰富的；充裕的", example: "The region is abundant in wildlife."},
+        {word: "academic", meaning: "学术的；理论的", example: "She has excellent academic records."},
+        {word: "academy", meaning: "学院；研究院", example: "He graduated from a military academy."},
+        {word: "accelerate", meaning: "加速；促进", example: "The car accelerated down the slope."},
+        {word: "accent", meaning: "口音；重音", example: "She speaks with a southern accent."}
+    ],
+    cet4: [
+        {word: "available", meaning: "可获得的；有空的", example: "Tickets are available online."},
+        {word: "benefit", meaning: "益处；受益", example: "Exercise has many health benefits."},
+        {word: "challenge", meaning: "挑战；质疑", example: "This job offers many challenges."},
+        {word: "determine", meaning: "决定；确定", example: "We need to determine the cause."},
+        {word: "environment", meaning: "环境", example: "We must protect the environment."}
+    ],
+    cet6: [
+        {word: "ambiguous", meaning: "模棱两可的", example: "His answer was ambiguous."},
+        {word: "comprehensive", meaning: "全面的；综合的", example: "We need a comprehensive plan."},
+        {word: "controversial", meaning: "有争议的", example: "It's a controversial topic."},
+        {word: "deteriorate", meaning: "恶化；退化", example: "His health began to deteriorate."},
+        {word: "elaborate", meaning: "精心制作的；详细阐述", example: "She gave an elaborate explanation."}
+    ]
+};
+
+// ==================== 数据持久化 ====================
+function loadData() {
+    const saved = localStorage.getItem('vocabData_v2');
+    if (saved) return JSON.parse(saved);
+    return {
+        words: [],
+        stats: { daily: {}, lastStudyDate: null, streak: 0, longestStreak: 0 },
+        currentWordbook: 'custom'
+    };
+}
+
+function saveData() {
+    localStorage.setItem('vocabData_v2', JSON.stringify(data));
+}
+
+let data = loadData();
+let chartInstance = null;
+let currentPronounceWord = null;
+
+// ==================== 核心算法 ====================
+
+function getReviewDates(startDate) {
+    const base = new Date(startDate);
+    return INTERVALS.map(days => {
+        const d = new Date(base);
+        d.setDate(d.getDate() + days);
+        return d.toISOString().split('T')[0];
+    });
+}
+
+function getToday() {
+    return new Date().toISOString().split('T')[0];
+}
+
+function isDueToday(word) {
+    const today = getToday();
+    if (word.startDate === today) return true;
+    return word.reviewDates.some(d => d === today);
+}
+
+function getNextReview(word) {
+    const today = getToday();
+    const future = word.reviewDates.filter(d => d > today);
+    return future.length > 0 ? future[0] : null;
+}
+
+function isMastered(word) {
+    const knownCount = word.reviews.filter(r => r.result === 'known').length;
+    return knownCount >= MASTER_THRESHOLD;
+}
+
+// ==================== 打卡逻辑 ====================
+
+function updateStreak() {
+    const today = getToday();
+    const last = data.stats.lastStudyDate;
+    
+    if (!last) {
+        data.stats.streak = 1;
+    } else {
+        const lastDate = new Date(last);
+        const todayDate = new Date(today);
+        const diff = (todayDate - lastDate) / (1000 * 60 * 60 * 24);
+        
+        if (diff === 1) {
+            data.stats.streak += 1;
+        } else if (diff > 1) {
+            if (data.stats.streak > data.stats.longestStreak) {
+                data.stats.longestStreak = data.stats.streak;
+            }
+            data.stats.streak = 1;
+        }
+    }
+    
+    if (data.stats.streak > data.stats.longestStreak) {
+        data.stats.longestStreak = data.stats.streak;
+    }
+    
+    data.stats.lastStudyDate = today;
+}
+
+// ==================== 词库切换 ====================
+
+function switchWordbook(bookKey) {
+    if (bookKey === 'custom') {
+        data.currentWordbook = 'custom';
+        saveData();
+        render();
+        return;
+    }
+    
+    const book = WORDBOOKS[bookKey];
+    if (!book) return;
+    
+    if (data.words.length > 0 && !confirm(t('confirmReset') + `\n\n${t('switchTo')} ${t('wordbook' + bookKey.charAt(0).toUpperCase() + bookKey.slice(1))}?`)) {
+        document.getElementById('wordbookSelect').value = data.currentWordbook;
+        return;
+    }
+    
+    data.words = book.map((item, idx) => ({
+        id: Date.now() + idx,
+        word: item.word,
+        meaning: item.meaning,
+        example: item.example || '',
+        startDate: getToday(),
+        reviewDates: getReviewDates(getToday()),
+        reviews: []
+    }));
+    
+    data.currentWordbook = bookKey;
+    data.stats = { daily: {}, lastStudyDate: null, streak: 0, longestStreak: data.stats.longestStreak };
+    saveData();
+    render();
+    showToast(`${book.length} ${t('wordsImported')}`);
+}
+
+// ==================== 操作 ====================
+
+function addWord() {
+    const word = document.getElementById('wordInput').value.trim();
+    const meaning = document.getElementById('meaningInput').value.trim();
+    const example = document.getElementById('exampleInput').value.trim();
+    
+    if (!word || !meaning) {
+        showToast(t('emptyInput'), 'warning');
+        return;
+    }
+    
+    addSingleWord(word, meaning, example);
+    
+    document.getElementById('wordInput').value = '';
+    document.getElementById('meaningInput').value = '';
+    document.getElementById('exampleInput').value = '';
+    document.getElementById('wordInput').focus();
+}
+
+function addSingleWord(word, meaning, example) {
+    const today = getToday();
+    const newWord = {
+        id: Date.now() + Math.random(),
+        word: word,
+        meaning: meaning,
+        example: example || '',
+        startDate: today,
+        reviewDates: getReviewDates(today),
+        reviews: []
+    };
+    
+    data.words.push(newWord);
+    saveData();
+    render();
+}
+
+function bulkImport() {
+    const text = document.getElementById('bulkInput').value.trim();
+    if (!text) return;
+    
+    const lines = text.split('\n');
+    let count = 0;
+    
+    lines.forEach(line => {
+        const parts = line.split('=');
+        if (parts.length >= 2) {
+            const word = parts[0].trim();
+            const meaning = parts[1].trim();
+            const example = parts[2] ? parts[2].trim() : '';
+            if (word && meaning) {
+                addSingleWord(word, meaning, example);
+                count++;
+            }
+        }
+    });
+    
+    document.getElementById('bulkInput').value = '';
+    showToast(`${count} ${t('wordsImported')}`);
+}
+
+function reviewWord(id, result) {
+    const word = data.words.find(w => w.id === id);
+    if (!word) return;
+    
+    const today = getToday();
+    
+    word.reviews.push({
+        date: today,
+        result: result
+    });
+    
+    if (!data.stats.daily[today]) {
+        data.stats.daily[today] = { known: 0, fuzzy: 0, forgot: 0 };
+    }
+    data.stats.daily[today][result]++;
+    
+    updateStreak();
+    saveData();
+    render();
+}
+
+// ==================== 发音 ====================
+
+function openPronounce(word, meaning) {
+    currentPronounceWord = word;
+    document.getElementById('pronounceWord').textContent = word;
+    document.getElementById('pronounceMeaning').textContent = meaning;
+    document.getElementById('pronounceModal').classList.add('active');
+    speakCurrentWord();
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+function speakCurrentWord() {
+    if (!currentPronounceWord) return;
+    
+    const utterance = new SpeechSynthesisUtterance(currentPronounceWord);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.8;
+    speechSynthesis.speak(utterance);
+}
+
+// ==================== 数据导出导入 ====================
+
+function exportData() {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `vocab-backup-${getToday()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('JSON exported');
+}
+
+function exportCSV() {
+    let csv = 'word,meaning,example,startDate,reviews\n';
+    data.words.forEach(w => {
+        const reviews = w.reviews.map(r => `${r.date}:${r.result}`).join(';');
+        csv += `"${w.word}","${w.meaning}","${w.example || ''}","${w.startDate}","${reviews}"\n`;
+    });
+    
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `vocab-${getToday()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('CSV exported');
+}
+
+function importFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            if (file.name.endsWith('.json')) {
+                const imported = JSON.parse(e.target.result);
+                if (imported.words) {
+                    data = imported;
+                    saveData();
+                    render();
+                    showToast(t('importSuccess'));
+                }
+            } else if (file.name.endsWith('.csv')) {
+                // 简单 CSV 导入
+                const lines = e.target.result.split('\n').slice(1);
+                let count = 0;
+                lines.forEach(line => {
+                    const parts = line.split(',');
+                    if (parts.length >= 2) {
+                        const word = parts[0].replace(/"/g, '').trim();
+                        const meaning = parts[1].replace(/"/g, '').trim();
+                        const example = parts[2] ? parts[2].replace(/"/g, '').trim() : '';
+                        if (word && meaning) {
+                            addSingleWord(word, meaning, example);
+                            count++;
+                        }
+                    }
+                });
+                showToast(`${count} ${t('wordsImported')}`);
+            }
+        } catch (err) {
+            showToast('Import failed: ' + err.message, 'error');
+        }
+    };
+    reader.readAsText(file);
+    input.value = '';
+}
+
+function resetData() {
+    if (!confirm(t('confirmReset'))) return;
+    data = { words: [], stats: { daily: {}, lastStudyDate: null, streak: 0, longestStreak: 0 }, currentWordbook: 'custom' };
+    saveData();
+    render();
+    showToast('Data reset');
+}
+
+// ==================== 渲染 ====================
+
+function render() {
+    const today = getToday();
+    const dueWords = data.words.filter(w => isDueToday(w));
+    
+    // 更新计数
+    document.getElementById('todayCount').textContent = dueWords.length;
+    document.getElementById('totalWordsCount').textContent = data.words.length;
+    document.getElementById('streakCount').textContent = data.stats.streak;
+    document.getElementById('dateDisplay').textContent = 
+        new Date().toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', 
+        { month: 'short', day: 'numeric', weekday: 'short' });
+    
+    // 掌握数量
+    const mastered = data.words.filter(w => isMastered(w)).length;
+    document.getElementById('masteredCount').textContent = mastered;
+    const progress = data.words.length > 0 ? Math.round(mastered / data.words.length * 100) : 0;
+    document.getElementById('progressBar').style.width = progress + '%';
+    
+    // 统计
+    let known = 0, fuzzy = 0, forgot = 0;
+    data.words.forEach(w => {
+        w.reviews.forEach(r => {
+            if (r.result === 'known') known++;
+            else if (r.result === 'fuzzy') fuzzy++;
+            else if (r.result === 'forgot') forgot++;
+        });
+    });
+    document.getElementById('knownCount').textContent = known;
+    document.getElementById('fuzzyCount').textContent = fuzzy;
+    document.getElementById('forgotCount').textContent = forgot;
+    const total = known + fuzzy + forgot;
+    document.getElementById('accuracyRate').textContent = 
+        total > 0 ? Math.round(known / total * 100) + '%' : '0%';
+    
+    // 渲染复习列表
+    renderReviewList(dueWords, today);
+    
+    // 未来计划
+    renderSchedule();
+    
+    // 全部单词
+    renderAllWords();
+    
+    // 更新词库选择
+    document.getElementById('wordbookSelect').value = data.currentWordbook || 'custom';
+}
+
+function renderReviewList(dueWords, today) {
+    const list = document.getElementById('reviewList');
+    if (dueWords.length === 0) {
+        list.innerHTML = `
+            <div class="card rounded-2xl p-12 text-center fade-in">
+                <p class="text-5xl mb-4">🎉</p>
+                <p class="text-lg font-semibold mb-2">${t('noWordsToday')}</p>
+                <p style="color: var(--text-muted)">${t('addNewTip')}</p>
+            </div>
+        `;
+        return;
+    }
+    
+    list.innerHTML = dueWords.map(w => {
+        const isNew = w.startDate === today && w.reviews.length === 0;
+        const reviewCount = w.reviews.length;
+        const stage = reviewCount < INTERVALS.length ? `${t('stageLabel')} ${reviewCount + 1} ${t('round')}` : t('completed');
+        
+        return `
+            <div class="card rounded-2xl p-5 fade-in">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl font-bold">${w.word}</span>
+                        ${isNew ? `<span class="tag" style="background: rgba(34,197,94,0.2); color: var(--success)">${t('newWord')}</span>` : ''}
+                        ${isMastered(w) ? `<span class="tag" style="background: rgba(59,130,246,0.2); color: var(--info)">✓ ${t('mastered')}</span>` : ''}
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs px-2 py-1 rounded-full" style="background: var(--bg-card); color: var(--text-muted)">${stage}</span>
+                        <button onclick="openPronounce('${w.word}', '${w.meaning}')" class="btn p-1.5 rounded-lg hover:bg-neutral-800/50" title="${t('pronunciation')}">
+                            🔊
+                        </button>
+                    </div>
+                </div>
+                <p class="text-lg mb-2" style="color: var(--text-secondary)">${w.meaning}</p>
+                ${w.example ? `<p class="text-sm mb-4 italic" style="color: var(--text-muted)">"${w.example}"</p>` : ''}
+                <div class="flex gap-2">
+                    <button onclick="reviewWord(${w.id}, 'known')" 
+                        class="btn flex-1 py-2.5 rounded-xl font-medium" 
+                        style="background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3);">
+                        ✅ ${t('known')}
+                    </button>
+                    <button onclick="reviewWord(${w.id}, 'fuzzy')" 
+                        class="btn flex-1 py-2.5 rounded-xl font-medium" 
+                        style="background: rgba(234,179,8,0.15); color: var(--warning); border: 1px solid rgba(234,179,8,0.3);">
+                        ⚠️ ${t('fuzzy')}
+                    </button>
+                    <button onclick="reviewWord(${w.id}, 'forgot')" 
+                        class="btn flex-1 py-2.5 rounded-xl font-medium" 
+                        style="background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3);">
+                        ❌ ${t('forgot')}
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderSchedule() {
+    const today = getToday();
+    const schedule = {};
+    
+    for (let i = 0; i < 7; i++) {
+        const d = new Date();
+        d.setDate(d.getDate() + i);
+        const dateStr = d.toISOString().split('T')[0];
+        const count = data.words.filter(w => w.reviewDates.includes(dateStr)).length;
+        if (count > 0 || i === 0) {
+            schedule[dateStr] = count;
+        }
+    }
+    
+    document.getElementById('scheduleList').innerHTML = Object.entries(schedule)
+        .map(([date, count]) => {
+            const isToday = date === today;
+            const d = new Date(date);
+            const label = isToday ? (currentLang === 'zh' ? '今天' : 'Today') : 
+                d.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric' });
+            return `
+                <div class="flex justify-between items-center py-2 px-3 rounded-lg ${isToday ? 'card' : ''}">
+                    <span style="color: ${isToday ? 'var(--text-primary)' : 'var(--text-muted)'}">${label}</span>
+                    <span class="font-bold">${count} ${t('words')}</span>
+                </div>
+            `;
+        }).join('');
+}
+
+function renderAllWords() {
+    const search = document.getElementById('searchInput').value.trim().toLowerCase();
+    const filter = document.getElementById('filterSelect').value;
+    const today = getToday();
+    
+    let filtered = data.words;
+    
+    // 搜索
+    if (search) {
+        filtered = filtered.filter(w => 
+            w.word.toLowerCase().includes(search) || 
+            w.meaning.toLowerCase().includes(search)
+        );
+    }
+    
+    // 筛选
+    if (filter === 'due') {
+        filtered = filtered.filter(w => isDueToday(w));
+    } else if (filter === 'new') {
+        filtered = filtered.filter(w => w.startDate === today && w.reviews.length === 0);
+    } else if (filter === 'mastered') {
+        filtered = filtered.filter(w => isMastered(w));
+    }
+    
+    const container = document.getElementById('allWords');
+    if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-8" style="color: var(--text-muted)">No words found</div>`;
+        return;
+    }
+    
+    container.innerHTML = filtered.map(w => {
+        const next = getNextReview(w);
+        const nextLabel = next ? next.slice(5) : t('completed');
+        const totalReviews = w.reviews.length;
+        const knownCount = w.reviews.filter(r => r.result === 'known').length;
+        
+        return `
+            <div class="flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-neutral-800/30 slide-in">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">${highlightSearch(w.word, search)}</span>
+                        ${isMastered(w) ? `<span style="color: var(--info)">✓</span>` : ''}
+                    </div>
+                    <div class="text-xs truncate" style="color: var(--text-muted)">${highlightSearch(w.meaning, search)}</div>
+                </div>
+                <div class="text-xs text-right flex-shrink-0 ml-4" style="color: var(--text-muted)">
+                    <div>${t('reviewed')} ${totalReviews} ${t('times')}</div>
+                    <div>${t('nextReview')}: ${nextLabel}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function highlightSearch(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<span class="search-highlight">$1</span>');
+}
+
+// ==================== 图表 ====================
+
+function initChart() {
+    if (chartInstance) return;
+    
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    const dates = [];
+    const knownData = [];
+    const fuzzyData = [];
+    const forgotData = [];
+    
+    for (let i = 13; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split('T')[0];
+        const stats = data.stats.daily[dateStr] || { known: 0, fuzzy: 0, forgot: 0 };
+        
+        dates.push(d.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric' }));
+        knownData.push(stats.known);
+        fuzzyData.push(stats.fuzzy);
+        forgotData.push(stats.forgot);
+    }
+    
+    const textColor = getComputedStyle(document.body).getPropertyValue('--text-muted').trim() || '#737373';
+    const gridColor = 'rgba(128,128,128,0.08)';
+    
+    chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [
+                { label: t('known'), data: knownData, backgroundColor: 'rgba(34,197,94,0.7)', borderRadius: 3 },
+                { label: t('fuzzy'), data: fuzzyData, backgroundColor: 'rgba(234,179,8,0.7)', borderRadius: 3 },
+                { label: t('forgot'), data: forgotData, backgroundColor: 'rgba(239,68,68,0.7)', borderRadius: 3 }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    labels: { color: textColor, font: { family: 'Inter, Noto Sans SC', size: 11 }, boxWidth: 12 } 
+                }
+            },
+            scales: {
+                x: { 
+                    stacked: true,
+                    ticks: { color: textColor, font: { size: 10 } },
+                    grid: { color: gridColor }
+                },
+                y: { 
+                    stacked: true,
+                    ticks: { color: textColor, font: { size: 10 } },
+                    grid: { color: gridColor }
+                }
+            }
+        }
+    });
+}
+
+// ==================== 主题切换 ====================
+
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('vocabTheme', next);
+    document.getElementById('themeIcon').textContent = next === 'light' ? '🌙' : '☀️';
+    
+    if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+    }
+}
+
+// ==================== Toast ====================
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    
+    const colors = {
+        success: 'var(--success)',
+        warning: 'var(--warning)',
+        error: 'var(--danger)'
+    };
+    toast.style.borderLeft = `3px solid ${colors[type] || colors.success}`;
+    
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ==================== 初始化 ====================
+
+function init() {
+    // 主题
+    const savedTheme = localStorage.getItem('vocabTheme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('themeIcon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    
+    // 语言
+    updateLanguage();
+    
+    // 渲染
+    render();
+    
+    // 点击模态框外部关闭
+    document.getElementById('pronounceModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal('pronounceModal');
+    });
+}
+
+init();
+</script>
+
+</body>
+</html>
