@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> - Steve Huang</title>
+    <title>Manganese</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -75,11 +75,11 @@
                 
                 <!-- 操作按钮 -->
                 <div class="flex gap-3">
-                    <a href="#" target="_blank" class="px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-neutral-200 transition-colors flex items-center gap-2">
+                    <a href="https://stevehuang.eu.org/project/manganese/main.html" target="_blank" class="px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-neutral-200 transition-colors flex items-center gap-2">
                         <i class="fas fa-external-link-alt"></i>
                         访问网站
                     </a>
-                    <a href="#" target="_blank" class="px-6 py-3 bg-neutral-900 border border-neutral-700 rounded-lg font-semibold hover:border-neutral-500 transition-colors flex items-center gap-2">
+                    <a href="https://github.com/h11711/Ebbinghaus-Vocabulary-Memory-Tool" target="_blank" class="px-6 py-3 bg-neutral-900 border border-neutral-700 rounded-lg font-semibold hover:border-neutral-500 transition-colors flex items-center gap-2">
                         <i class="fab fa-github"></i>
                         查看源码
                     </a>
@@ -91,7 +91,7 @@
                 <span class="tech-tag px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-full text-sm">HTML</span>
                 <span class="tech-tag px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-full text-sm">CSS</span>
                 <span class="tech-tag px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-full text-sm">JavaScript</span>
-                <span class="tech-tag px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-full text-sm">Tailwind CSS</span>
+                <span class="tech-tag px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-full text-sm">LocalStorage</span>
                 <!-- 添加更多标签 -->
             </div>
         </header>
@@ -100,7 +100,7 @@
         <div class="grid md:grid-cols-3 gap-6 mb-12">
             <div class="p-6 bg-neutral-900 rounded-xl border border-neutral-800">
                 <div class="text-neutral-500 text-sm mb-1">开发时间</div>
-                <div class="text-white font-semibold">2026年7月</div>
+                <div class="text-white font-semibold">2026/8/3</div>
             </div>
             <div class="p-6 bg-neutral-900 rounded-xl border border-neutral-800">
                 <div class="text-neutral-500 text-sm mb-1">项目状态</div>
@@ -120,63 +120,13 @@
             <h2 class="text-2xl font-bold text-white mb-6">项目介绍</h2>
             <div class="space-y-4 text-neutral-300 leading-relaxed">
                 <p>
-                    在这里写项目的背景。为什么要做这个项目？解决了什么问题？
-                    比如："我一直想有一个属于自己的个人网站，用来展示项目和文章。
-                    暑假有空，就用 HTML + Tailwind CSS 搭了这个站点。"
+                    解决的问题：背了忘，忘了背，不知道哪天该复习哪个单词。
+                     功能：
+                     • 输入单词列表（或导入高考3500词）
+                     • 自动按艾宾浩斯曲线生成复习计划：第1天、第2天、第4天、第7天、第15天
+                     • 每天打开网页，显示"今日需复习"列表
+                     • 标记"认识/模糊/忘记"，自动调整下次复习时间
                 </p>
-                <p>
-                    第二段可以写核心功能或亮点。这个项目做了什么？有什么特别之处？
-                    比如："支持响应式设计，在手机和电脑上都能正常浏览。
-                    还做了中英文切换功能，虽然内容还没填满。"
-                </p>
-                <p>
-                    第三段可以写遇到的挑战和解决方案。
-                    比如："部署到 GitHub Pages 时遇到了路径问题，
-                    通过调整相对路径解决了图片加载失败的问题。"
-                </p>
-            </div>
-        </section>
-
-        <!-- 功能特性 -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-white mb-6">功能特性</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="p-5 bg-neutral-900 rounded-xl border border-neutral-800 flex items-start gap-4">
-                    <div class="w-10 h-10 bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-mobile-alt text-neutral-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-white mb-1">响应式设计</h3>
-                        <p class="text-sm text-neutral-400">适配手机、平板、桌面端各种屏幕尺寸</p>
-                    </div>
-                </div>
-                <div class="p-5 bg-neutral-900 rounded-xl border border-neutral-800 flex items-start gap-4">
-                    <div class="w-10 h-10 bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-language text-neutral-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-white mb-1">多语言支持</h3>
-                        <p class="text-sm text-neutral-400">中英文一键切换，方便不同读者</p>
-                    </div>
-                </div>
-                <div class="p-5 bg-neutral-900 rounded-xl border border-neutral-800 flex items-start gap-4">
-                    <div class="w-10 h-10 bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-bolt text-neutral-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-white mb-1">性能优化</h3>
-                        <p class="text-sm text-neutral-400">CDN 加载资源，首屏加载速度快</p>
-                    </div>
-                </div>
-                <div class="p-5 bg-neutral-900 rounded-xl border border-neutral-800 flex items-start gap-4">
-                    <div class="w-10 h-10 bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-paint-brush text-neutral-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-white mb-1">深色主题</h3>
-                        <p class="text-sm text-neutral-400">护眼深色模式，现代简约设计风格</p>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -203,21 +153,21 @@
                 
                 <div class="relative pl-8">
                     <div class="timeline-dot absolute -left-[9px] top-1 w-4 h-4 bg-white rounded-full"></div>
-                    <div class="text-sm text-neutral-500 mb-1">2026年7月20日</div>
+                    <div class="text-sm text-neutral-500 mb-1">2026/7/31</div>
                     <h3 class="font-semibold text-white mb-1">项目立项</h3>
                     <p class="text-neutral-400 text-sm">确定技术栈，搭建基础框架，完成首页布局设计。</p>
                 </div>
 
                 <div class="relative pl-8">
                     <div class="timeline-dot absolute -left-[9px] top-1 w-4 h-4 bg-neutral-600 rounded-full"></div>
-                    <div class="text-sm text-neutral-500 mb-1">2026年7月25日</div>
+                    <div class="text-sm text-neutral-500 mb-1">2026/8/1</div>
                     <h3 class="font-semibold text-white mb-1">功能开发</h3>
                     <p class="text-neutral-400 text-sm">实现页面切换、多语言支持、响应式适配。</p>
                 </div>
 
                 <div class="relative pl-8">
                     <div class="timeline-dot absolute -left-[9px] top-1 w-4 h-4 bg-neutral-600 rounded-full"></div>
-                    <div class="text-sm text-neutral-500 mb-1">2026年7月28日</div>
+                    <div class="text-sm text-neutral-500 mb-1">2026/8/3</div>
                     <h3 class="font-semibold text-white mb-1">部署上线</h3>
                     <p class="text-neutral-400 text-sm">配置 GitHub Pages，绑定自定义域名，正式上线。</p>
                 </div>
@@ -229,19 +179,11 @@
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-white mb-6">相关链接</h2>
             <div class="space-y-3">
-                <a href="#" target="_blank" class="flex items-center gap-4 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors group">
+                <a href="https://github.com/h11711/Ebbinghaus-Vocabulary-Memory-Tool" target="_blank" class="flex items-center gap-4 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors group">
                     <i class="fab fa-github text-xl text-neutral-400 group-hover:text-white transition-colors"></i>
                     <div class="flex-1">
                         <div class="text-white font-medium">GitHub 仓库</div>
                         <div class="text-sm text-neutral-500">查看源代码和提交历史</div>
-                    </div>
-                    <i class="fas fa-arrow-right text-neutral-600 group-hover:text-white transition-colors"></i>
-                </a>
-                <a href="#" target="_blank" class="flex items-center gap-4 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors group">
-                    <i class="fas fa-book text-xl text-neutral-400 group-hover:text-white transition-colors"></i>
-                    <div class="flex-1">
-                        <div class="text-white font-medium">项目文档</div>
-                        <div class="text-sm text-neutral-500">详细的使用说明和开发文档</div>
                     </div>
                     <i class="fas fa-arrow-right text-neutral-600 group-hover:text-white transition-colors"></i>
                 </a>
@@ -250,10 +192,6 @@
 
         <!-- 上一个/下一个项目 -->
         <div class="grid md:grid-cols-2 gap-4 pt-8 border-t border-neutral-800">
-            <a href="#" class="group p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors">
-                <div class="text-xs text-neutral-500 mb-1">← 上一个项目</div>
-                <div class="text-white group-hover:text-neutral-300 transition-colors">上一个项目名称</div>
-            </a>
             <a href="#" class="group p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors text-right">
                 <div class="text-xs text-neutral-500 mb-1">下一个项目 →</div>
                 <div class="text-white group-hover:text-neutral-300 transition-colors">下一个项目名称</div>
