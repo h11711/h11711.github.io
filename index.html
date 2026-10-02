@@ -70,6 +70,99 @@
     
 </head>
 <body class="h-screen overflow-hidden">
+    <!-- 节日横幅 -->
+    <div id="festival-banner" class="relative z-[100] text-center py-2.5 px-4 text-sm font-medium" style="display: none;">
+        <span class="inline-flex items-center gap-2">
+            <span id="bannerIcon">🎉</span>
+            <span id="bannerText"></span>
+            <a href="festival.html" class="underline underline-offset-2 hover:text-white/80">进一步了解 →</a>
+        </span>
+        <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+<script>
+function closeBanner() {
+    document.getElementById('festival-banner').style.display = 'none';
+    localStorage.setItem('site_banner_closed_' + getToday(), 'true');
+}
+
+function getToday() {
+    return new Date().toISOString().split('T')[0];
+}
+
+// 检查今天是否已关闭
+if (localStorage.getItem('site_banner_closed_' + getToday()) === 'true') {
+    document.getElementById('festival-banner').style.display = 'none';
+}
+
+// ========== 完整节日库 ==========
+const HOLIDAYS = [
+    // 中国法定节假日
+    { name: '元旦', icon: '🎆', month: 1, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #ef4444, #f97316)', quote: '新年新气象，万事开门红。' },
+    { name: '春节', icon: '🧧', month: 1, day: 29, duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #991b1b, #dc2626)', quote: '爆竹声中一岁除，春风送暖入屠苏。', lunar: true },
+    { name: '元宵节', icon: '🏮', month: 2, day: 12, duration: 1, gradient: 'linear-gradient(90deg, #f59e0b, #ea580c)', quote: '月上柳梢头，人约黄昏后。', lunar: true },
+    { name: '清明节', icon: '🌿', month: 4, day: 4, duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)', quote: '清明时节雨纷纷，路上行人欲断魂。' },
+    { name: '劳动节', icon: '🛠️', month: 5, day: 1, duration: 5, gradient: 'linear-gradient(90deg, #dc2626, #ea580c)', quote: '劳动最光荣，奋斗最幸福。' },
+    { name: '端午节', icon: '🐉', month: 5, day: 31, duration: 3, gradient: 'linear-gradient(90deg, #16a34a, #15803d)', quote: '端午临中夏，时清日复长。', lunar: true },
+    { name: '七夕节', icon: '💕', month: 8, day: 29, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f472b6)', quote: '两情若是久长时，又岂在朝朝暮暮。', lunar: true },
+    { name: '中秋节', icon: '🌕', month: 10, day: 6, duration: 3, gradient: 'linear-gradient(90deg, #f59e0b, #eab308, #ca8a04)', quote: '但愿人长久，千里共婵娟。', lunar: true },
+    { name: '国庆节', icon: '🇨🇳', month: 10, day: 1, duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #ea580c, #ca8a04)', quote: '愿以吾辈之青春，捍卫盛世之中华。' },
+    { name: '重阳节', icon: '🍂', month: 10, day: 29, duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)', quote: '遥知兄弟登高处，遍插茱萸少一人。', lunar: true },
+    { name: '冬至', icon: '❄️', month: 12, day: 21, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)', quote: '冬至阳生春又来。' },
+    
+    // 全球主要节日
+    { name: '情人节', icon: '❤️', month: 2, day: 14, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f43f5e)', quote: 'Love is composed of a single soul inhabiting two bodies.' },
+    { name: '妇女节', icon: '👩', month: 3, day: 8, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #d946ef)', quote: '巾帼不让须眉，红颜更胜儿郎。' },
+    { name: '愚人节', icon: '🤡', month: 4, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #a855f7, #8b5cf6)', quote: 'April Fool! 今天可以开个小玩笑。' },
+    { name: '复活节', icon: '🐰', month: 4, day: 20, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #c084fc)', quote: 'He is risen!' },
+    { name: '地球日', icon: '🌍', month: 4, day: 22, duration: 1, gradient: 'linear-gradient(90deg, #22c55e, #3b82f6)', quote: '保护地球，人人有责。' },
+    { name: '母亲节', icon: '💐', month: 5, day: 11, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #fb7185)', quote: '谁言寸草心，报得三春晖。' },
+    { name: '儿童节', icon: '🎈', month: 6, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', quote: '愿你出走半生，归来仍是少年。' },
+    { name: '父亲节', icon: '👨', month: 6, day: 15, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #1d4ed8)', quote: '父爱如山，深沉而伟大。' },
+    { name: '万圣节', icon: '🎃', month: 10, day: 31, duration: 1, gradient: 'linear-gradient(90deg, #f97316, #ea580c)', quote: 'Trick or treat!' },
+    { name: '感恩节', icon: '🦃', month: 11, day: 27, duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)', quote: '感恩有你，一路同行。' },
+    { name: '平安夜', icon: '🎄', month: 12, day: 24, duration: 1, gradient: 'linear-gradient(90deg, #16a34a, #22c55e)', quote: 'Silent night, holy night.' },
+    { name: '圣诞节', icon: '🎅', month: 12, day: 25, duration: 3, gradient: 'linear-gradient(90deg, #dc2626, #16a34a)', quote: 'Merry Christmas! 愿平安喜乐常伴。' },
+    { name: '跨年夜', icon: '🎆', month: 12, day: 31, duration: 1, gradient: 'linear-gradient(90deg, #8b5cf6, #ec4899)', quote: '再见旧岁，你好新年！' }
+];
+
+function detectHoliday() {
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    
+    // 查找当前是否在节日期间
+    for (const holiday of HOLIDAYS) {
+        const startDate = new Date(now.getFullYear(), holiday.month - 1, holiday.day);
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + holiday.duration - 1);
+        
+        if (now >= startDate && now <= endDate) {
+            return holiday;
+        }
+    }
+    
+    return null;
+}
+
+function initBanner() {
+    const holiday = detectHoliday();
+    if (!holiday) {
+        document.getElementById('festival-banner').style.display = 'none';
+        return;
+    }
+    
+    document.getElementById('bannerIcon').textContent = holiday.icon;
+    document.getElementById('bannerText').textContent = holiday.name + '快乐！';
+    document.getElementById('festival-banner').style.background = holiday.gradient;
+    document.getElementById('festival-banner').style.display = 'block';
+}
+
+initBanner();
+</script>
+
 
     <!-- 桌面端：左侧边栏 | 移动端：顶部导航 -->
     <div class="flex h-full flex-col lg:flex-row">
