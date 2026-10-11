@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
-        
+
         body {
             font-family: 'Inter', 'Noto Sans SC', sans-serif;
             background-color: #0a0a0a;
             color: #e5e5e5;
         }
-        
+
         .sidebar-item {
             transition: all 0.3s ease;
         }
@@ -26,21 +26,21 @@
             background-color: #404040;
             border-left: 3px solid #fff;
         }
-        
+
         .page-section {
             display: none;
             animation: fadeIn 0.5s ease-in-out;
         }
         .page-section.active {
             display: block;
-            min-height: 100vh;  /* 添加这行 */
+            min-height: 100vh;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .social-icon {
             transition: all 0.3s ease;
         }
@@ -48,8 +48,7 @@
             transform: translateY(-3px);
             color: #fff;
         }
-        
-        /* 自定义滚动条 */
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -63,127 +62,38 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #525252;
         }
-        
-        .hidden {
-            display: none;
-        }
 
-        #festival-banner {
-            display: none;
+        .hidden {
+            display: none !important;
         }
     </style>
-    
-    <!-- RSS -->
+
     <link rel="alternate" type="application/rss+xml" title="Steve Huang" href="https://stevehuang.eu.org/rss/rss.xml">
-    <div id="festival-banner" class="relative z-[100] text-center py-2.5 px-4 text-sm font-medium hidden">
 </head>
 <body class="h-screen overflow-hidden">
+
     <!-- 节日横幅 -->
-    <div id="festival-banner" class="relative z-[100] text-center py-2.5 px-4 text-sm font-medium" style="display: none;">
+    <div id="festival-banner" class="relative z-[100] text-center py-2.5 px-4 text-sm font-medium hidden">
         <span class="inline-flex items-center gap-2">
             <span id="bannerIcon">🎉</span>
             <span id="bannerText"></span>
             <a href="festival/festival.html" class="underline underline-offset-2 hover:text-white/80">进一步了解 →</a>
         </span>
-        <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors">
+        <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors" aria-label="关闭横幅">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
     </div>
 
-<script>
-function closeBanner() {
-    document.getElementById('festival-banner').style.display = 'none';
-    localStorage.setItem('site_banner_closed_' + getToday(), 'true');
-}
-
-function getToday() {
-    return new Date().toISOString().split('T')[0];
-}
-
-// 检查今天是否已关闭
-if (localStorage.getItem('site_banner_closed_' + getToday()) === 'true') {
-    document.getElementById('festival-banner').style.display = 'none';
-}
-
-// ========== 完整节日库 ==========
-const HOLIDAYS = [
-    // 中国法定节假日
-    { name: '元旦', icon: '🎆', month: 1, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #ef4444, #f97316)', quote: '新年新气象，万事开门红。' },
-    { name: '春节', icon: '🧧', month: 1, day: 29, duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #991b1b, #dc2626)', quote: '爆竹声中一岁除，春风送暖入屠苏。', lunar: true },
-    { name: '元宵节', icon: '🏮', month: 2, day: 12, duration: 1, gradient: 'linear-gradient(90deg, #f59e0b, #ea580c)', quote: '月上柳梢头，人约黄昏后。', lunar: true },
-    { name: '清明节', icon: '🌿', month: 4, day: 4, duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)', quote: '清明时节雨纷纷，路上行人欲断魂。' },
-    { name: '劳动节', icon: '🛠️', month: 5, day: 1, duration: 5, gradient: 'linear-gradient(90deg, #dc2626, #ea580c)', quote: '劳动最光荣，奋斗最幸福。' },
-    { name: '端午节', icon: '🐉', month: 5, day: 31, duration: 3, gradient: 'linear-gradient(90deg, #16a34a, #15803d)', quote: '端午临中夏，时清日复长。', lunar: true },
-    { name: '七夕节', icon: '💕', month: 8, day: 29, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f472b6)', quote: '两情若是久长时，又岂在朝朝暮暮。', lunar: true },
-    { name: '中秋节', icon: '🌕', month: 10, day: 6, duration: 3, gradient: 'linear-gradient(90deg, #f59e0b, #eab308, #ca8a04)', quote: '但愿人长久，千里共婵娟。', lunar: true },
-    { name: '国庆节', icon: '🇨🇳', month: 10, day: 1, duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #ea580c, #ca8a04)', quote: '愿以吾辈之青春，捍卫盛世之中华。' },
-    { name: '重阳节', icon: '🍂', month: 10, day: 29, duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)', quote: '遥知兄弟登高处，遍插茱萸少一人。', lunar: true },
-    { name: '冬至', icon: '❄️', month: 12, day: 21, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)', quote: '冬至阳生春又来。' },
-    
-    // 全球主要节日
-    { name: '情人节', icon: '❤️', month: 2, day: 14, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f43f5e)', quote: 'Love is composed of a single soul inhabiting two bodies.' },
-    { name: '妇女节', icon: '👩', month: 3, day: 8, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #d946ef)', quote: '巾帼不让须眉，红颜更胜儿郎。' },
-    { name: '愚人节', icon: '🤡', month: 4, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #a855f7, #8b5cf6)', quote: 'April Fool! 今天可以开个小玩笑。' },
-    { name: '复活节', icon: '🐰', month: 4, day: 20, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #c084fc)', quote: 'He is risen!' },
-    { name: '地球日', icon: '🌍', month: 4, day: 22, duration: 1, gradient: 'linear-gradient(90deg, #22c55e, #3b82f6)', quote: '保护地球，人人有责。' },
-    { name: '母亲节', icon: '💐', month: 5, day: 11, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #fb7185)', quote: '谁言寸草心，报得三春晖。' },
-    { name: '儿童节', icon: '🎈', month: 6, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', quote: '愿你出走半生，归来仍是少年。' },
-    { name: '父亲节', icon: '👨', month: 6, day: 15, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #1d4ed8)', quote: '父爱如山，深沉而伟大。' },
-    { name: '万圣节', icon: '🎃', month: 10, day: 31, duration: 1, gradient: 'linear-gradient(90deg, #f97316, #ea580c)', quote: 'Trick or treat!' },
-    { name: '感恩节', icon: '🦃', month: 11, day: 27, duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)', quote: '感恩有你，一路同行。' },
-    { name: '平安夜', icon: '🎄', month: 12, day: 24, duration: 1, gradient: 'linear-gradient(90deg, #16a34a, #22c55e)', quote: 'Silent night, holy night.' },
-    { name: '圣诞节', icon: '🎅', month: 12, day: 25, duration: 3, gradient: 'linear-gradient(90deg, #dc2626, #16a34a)', quote: 'Merry Christmas! 愿平安喜乐常伴。' },
-    { name: '跨年夜', icon: '🎆', month: 12, day: 31, duration: 1, gradient: 'linear-gradient(90deg, #8b5cf6, #ec4899)', quote: '再见旧岁，你好新年！' }
-];
-
-function detectHoliday() {
-    const now = new Date();
-    const month = now.getMonth() + 1;
-    const day = now.getDate();
-    
-    // 查找当前是否在节日期间
-    for (const holiday of HOLIDAYS) {
-        const startDate = new Date(now.getFullYear(), holiday.month - 1, holiday.day);
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + holiday.duration - 1);
-        
-        if (now >= startDate && now <= endDate) {
-            return holiday;
-        }
-    }
-    
-    return null;
-}
-
-function initBanner() {
-    const holiday = detectHoliday();
-    if (!holiday) {
-        document.getElementById('festival-banner').style.display = 'none';
-        return;
-    }
-    
-    document.getElementById('bannerIcon').textContent = holiday.icon;
-    document.getElementById('bannerText').textContent = holiday.name + '快乐！';
-    document.getElementById('festival-banner').style.background = holiday.gradient;
-    document.getElementById('festival-banner').style.display = 'block';
-}
-
-initBanner();
-</script>
-
-
     <!-- 桌面端：左侧边栏 | 移动端：顶部导航 -->
     <div class="flex h-full flex-col lg:flex-row">
-        
+
         <!-- 导航栏/侧边栏 -->
         <nav id="sidebar" class="bg-neutral-900 border-r border-neutral-800 lg:w-64 w-full lg:h-full flex-shrink-0 flex flex-col">
-            <!-- Logo/名字区域 -->
             <div class="p-6 border-b border-neutral-800">
                 <h1 class="text-2xl font-bold tracking-wider text-white" data-i18n="siteName">YOUR NAME</h1>
                 <p class="text-neutral-400 text-sm mt-1" data-i18n="siteSubtitle">Developer / Designer</p>
             </div>
 
-            <!-- 导航链接 -->
             <div class="flex-1 overflow-y-auto py-4">
                 <ul class="space-y-1 px-3 flex lg:block overflow-x-auto lg:overflow-visible whitespace-nowrap lg:whitespace-normal">
                     <li class="inline-block lg:block mr-2 lg:mr-0">
@@ -218,27 +128,17 @@ initBanner();
                     </li>
                 </ul>
             </div>
-
-            <!-- 语言切换 -->
-            <div class="p-4 border-t border-neutral-800">
-                <button onclick="toggleLanguage()" class="w-full py-2 px-4 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
-                    <i class="fas fa-globe"></i>
-                    <span id="langBtn">English</span>
-                </button>
-            </div>
         </nav>
 
         <!-- 主内容区 -->
         <main class="flex-1 overflow-y-auto bg-black relative">
-            
+
             <!-- ==================== 首页 ==================== -->
             <section id="home" class="page-section active p-8 lg:p-16 flex flex-col justify-center">
                 <div class="max-w-4xl">
-                    <!-- 【填写位置1】首页大标题 -->
                     <h2 class="text-5xl lg:text-7xl font-bold mb-6 text-white tracking-tight" data-i18n="home.title">
                         Steve Huang
                     </h2>
-                    <!-- 【填写位置2】首页副标题/简介 -->
                     <p class="text-xl lg:text-2xl text-neutral-400 mb-8 leading-relaxed" data-i18n="home.subtitle">
                         欢迎访问Steve的个人网站！
                     </p>
@@ -249,16 +149,13 @@ initBanner();
             <section id="about" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto">
                     <h2 class="text-4xl font-bold mb-12 text-white" data-i18n="about.title">关于我</h2>
-                    
+
                     <div class="grid md:grid-cols-2 gap-12 items-start">
-                        <!-- 【填写位置5】个人照片 -->
                         <div class="aspect-square bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800">
                             <img src="img/profile.jpg" alt="Profile" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity">
-                            <!-- 提示：将 src 替换为你的图片链接，或删除 img 标签使用背景色占位 -->
                         </div>
-                        
+
                         <div class="space-y-6">
-                            <!-- 【填写位置6】详细介绍 -->
                             <div class="prose prose-invert">
                                 <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p1">
                                     在这里写第一段自我介绍，包括你的背景、教育经历或职业历程。
@@ -271,7 +168,6 @@ initBanner();
                                 </p>
                             </div>
 
-                            <!-- 【填写位置7】技能标签 -->
                             <div class="pt-6">
                                 <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4" data-i18n="about.skills">爱好</h3>
                                 <div class="flex flex-wrap gap-2">
@@ -280,7 +176,6 @@ initBanner();
                                     <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">Minecraft</span>
                                     <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">INFJ</span>
                                     <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">计算机</span>
-                                    <!-- 添加更多技能标签 -->
                                 </div>
                             </div>
                         </div>
@@ -294,10 +189,8 @@ initBanner();
                     <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="works.title">作品展示</h2>
                     <p class="text-neutral-400 mb-12" data-i18n="works.subtitle">精选项目与创作</p>
 
-                    <!-- 【填写位置9】作品网格 -->
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        
-                        <!-- 作品项目1 -->
+
                         <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
                             <div class="aspect-video bg-neutral-800 overflow-hidden">
                                 <img src="https://stevehuang.eu.org/img/proj/manganese/1.JPG" alt="Project 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -316,7 +209,6 @@ initBanner();
                             </div>
                         </article>
 
-                        <!-- 作品项目2 -->
                         <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
                             <div class="aspect-video bg-neutral-800 overflow-hidden">
                                 <img src="PROJECT2_IMAGE_URL" alt="Project 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -335,7 +227,6 @@ initBanner();
                             </div>
                         </article>
 
-                        <!-- 作品项目3 -->
                         <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
                             <div class="aspect-video bg-neutral-800 overflow-hidden">
                                 <img src="PROJECT3_IMAGE_URL" alt="Project 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -354,8 +245,6 @@ initBanner();
                             </div>
                         </article>
 
-                        <!-- 【提示】复制上述 article 结构添加更多作品 -->
-                        
                     </div>
                 </div>
             </section>
@@ -367,9 +256,7 @@ initBanner();
                     <p class="text-neutral-400 mb-12" data-i18n="blog.subtitle">思考、教程与分享</p>
 
                     <div class="space-y-8">
-                        <!-- 【填写位置10】文章列表 -->
-                        
-                        <!-- 文章1 -->
+
                         <article class="group border-b border-neutral-800 pb-8">
                             <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
                                 <span class="text-sm text-neutral-500">2026年10月11日</span>
@@ -387,7 +274,6 @@ initBanner();
                             </a>
                         </article>
 
-                        <!-- 文章2 -->
                         <article class="group border-b border-neutral-800 pb-8">
                             <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
                                 <span class="text-sm text-neutral-500">2024年1月10日</span>
@@ -405,7 +291,6 @@ initBanner();
                             </a>
                         </article>
 
-                        <!-- 文章3 -->
                         <article class="group border-b border-neutral-800 pb-8">
                             <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
                                 <span class="text-sm text-neutral-500">2024年1月5日</span>
@@ -423,10 +308,8 @@ initBanner();
                             </a>
                         </article>
 
-                        <!-- 【提示】复制 article 结构添加更多文章 -->
                     </div>
 
-                    <!-- 【填写位置11】分页或加载更多 -->
                     <div class="mt-12 text-center">
                         <button class="px-6 py-3 border border-neutral-700 rounded-full hover:bg-neutral-900 transition-colors text-sm" data-i18n="blog.loadMore">
                             加载更多文章
@@ -442,9 +325,7 @@ initBanner();
                     <p class="text-neutral-400 mb-12" data-i18n="contact.subtitle">有项目合作或想法交流？随时联系我</p>
 
                     <div class="grid md:grid-cols-2 gap-12">
-                        <!-- 联系信息 -->
                         <div class="space-y-8">
-                            <!-- 【填写位置12】直接联系方式 -->
                             <div class="space-y-4">
                                 <a href="mailto:steveh11711@outlook.com" class="flex items-center gap-4 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors group">
                                     <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center group-hover:bg-neutral-700 transition-colors">
@@ -467,121 +348,85 @@ initBanner();
                                 </a>
                             </div>
 
-                            <!-- 【填写位置13】社交媒体网格 -->
                             <div>
                                 <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4" data-i18n="contact.social">社交媒体</h3>
                                 <div class="grid grid-cols-4 gap-4">
-                                    <!-- 微信 -->
                                     <a href="social/wx.html" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-green-600 hover:text-green-500 transition-all group">
                                         <i class="fab fa-weixin text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">微信</span>
                                     </a>
-                                    
-                                    <!-- QQ -->
                                     <a href="social/qq.html" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-500 hover:text-blue-400 transition-all group">
                                         <i class="fab fa-qq text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">QQ</span>
                                     </a>
-                                    
-                                    <!-- B站 -->
                                     <a href="https://space.bilibili.com/502764107" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-pink-400 hover:text-pink-400 transition-all group">
                                         <i class="fas fa-tv text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Bilibili</span>
                                     </a>
-                                    
-                                    <!-- 知乎 -->
-<a href="https://www.zhihu.com/people/qqbb-53" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-400 hover:text-blue-300 transition-all group">
-    <i class="fas fa-graduation-cap text-2xl"></i>
-    <span class="text-xs text-neutral-500 group-hover:text-neutral-300">知乎</span>
-</a>
-
-<!-- GitHub -->
-<a href="https://github.com/h11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-purple-400 hover:text-purple-400 transition-all group">
-    <i class="fab fa-github text-2xl"></i>
-    <span class="text-xs text-neutral-500 group-hover:text-neutral-300">GitHub</span>
-</a>
-                                    
-                                    <!-- X (Twitter) -->
+                                    <a href="https://www.zhihu.com/people/qqbb-53" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-400 hover:text-blue-300 transition-all group">
+                                        <i class="fas fa-graduation-cap text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">知乎</span>
+                                    </a>
+                                    <a href="https://github.com/h11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-purple-400 hover:text-purple-400 transition-all group">
+                                        <i class="fab fa-github text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">GitHub</span>
+                                    </a>
                                     <a href="https://x.com/stevehuang11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-gray-400 hover:text-gray-200 transition-all group">
                                         <i class="fab fa-twitter text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">X</span>
                                     </a>
-                                    
-                                    <!-- Facebook -->
                                     <a href="https://www.facebook.com/profile.php?id=61566837926346" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-blue-600 hover:text-blue-500 transition-all group">
                                         <i class="fab fa-facebook-f text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Facebook</span>
                                     </a>
-
-<!-- Instagram -->
-<a href="https://www.instagram.com/stevehuang11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-pink-500 hover:text-pink-500 transition-all group">
-    <i class="fab fa-instagram text-2xl"></i>
-    <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Instagram</span>
-</a>
-
-<!-- YouTube -->
-<a href="https://youtube.com/@stevehuang11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-red-600 hover:text-red-500 transition-all group">
-    <i class="fab fa-youtube text-2xl"></i>
-    <span class="text-xs text-neutral-500 group-hover:text-neutral-300">YouTube</span>
-</a>
-                                    
-                                    <!-- Twitch -->
+                                    <a href="https://www.instagram.com/stevehuang11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-pink-500 hover:text-pink-500 transition-all group">
+                                        <i class="fab fa-instagram text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Instagram</span>
+                                    </a>
+                                    <a href="https://youtube.com/@stevehuang11711" target="_blank" rel="noopener" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-red-600 hover:text-red-500 transition-all group">
+                                        <i class="fab fa-youtube text-2xl"></i>
+                                        <span class="text-xs text-neutral-500 group-hover:text-neutral-300">YouTube</span>
+                                    </a>
                                     <a href="https://twitch.tv/h11711" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-purple-500 hover:text-purple-400 transition-all group">
                                         <i class="fab fa-twitch text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Twitch</span>
                                     </a>
-                                    <!-- RSS 订阅 -->
                                     <a href="rss/rss.xml" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-orange-500 hover:text-orange-500 transition-all group">
                                         <i class="fas fa-rss text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">RSS</span>
                                     </a>
-                                    <!-- LinkedIn -->
                                     <a href="https://www.linkedin.com/" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#0A66C2] hover:text-[#0A66C2] transition-all group">
                                         <i class="fab fa-linkedin-in text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">LinkedIn</span>
                                     </a>
-                                    <!-- Discord -->
                                     <a href="https://discord.com/stevehuang1111" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#5865F2] hover:text-[#5865F2] transition-all group">
                                         <i class="fab fa-discord text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Discord</span>
                                     </a>
-                                    <!-- 小红书 -->
                                     <a href="https://www.xiaohongshu.com/user/profile/60c4085e000000002002ce6a" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#FF2442] hover:text-[#FF2442] transition-all group">
                                         <i class="fa-solid fa-book-open text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">小红书</span>
                                     </a>
-        
-                                    <!-- 微博 -->
                                     <a href="https://weibo.com/u/7725013156" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#E6162D] hover:text-[#E6162D] transition-all group">
                                         <i class="fab fa-weibo text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">微博</span>
                                     </a>
-            
-                                    <!-- 抖音 -->
                                     <a href="https://www.douyin.com/user/MS4wLjABAAAAZyAY-PdC1b_EnTkr8RQh9yyQlThKF90R83jjx3r8goHdqgubVTvapRo5L027WVH1" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#FE2C55] hover:text-[#FE2C55] transition-all group">
                                         <i class="fab fa-tiktok text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">抖音</span>
                                     </a>
-        
-                                    <!-- Notion -->
                                     <a href="https://stevehuang11711.notion.site" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-white hover:text-white transition-all group">
                                         <i class="fa-solid fa-n text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Notion</span>
                                     </a>
-        
-                                    <!-- CSDN -->
                                     <a href="https://blog.csdn.net/nayitiancsdn" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#FC5531] hover:text-[#FC5531] transition-all group">
                                         <i class="fa-solid fa-c text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">CSDN</span>
                                     </a>
-        
-                                    <!-- Gitee -->
                                     <a href="https://gitee.com/steve-huang11711" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#C71D23] hover:text-[#C71D23] transition-all group">
                                         <i class="fa-solid fa-code-branch text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Gitee</span>
                                     </a>
-        
-                                    <!-- Buy Me a Coffee -->
                                     <a href="https://buymeacoffee.com/stevehuang" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-[#FFDD00] hover:text-[#FFDD00] transition-all group">
                                         <i class="fa-solid fa-mug-hot text-2xl"></i>
                                         <span class="text-xs text-neutral-500 group-hover:text-neutral-300">Buy Me a Coffee</span>
@@ -595,5 +440,104 @@ initBanner();
 
         </main>
     </div>
+
+    <script>
+        // ========== 页面切换 ==========
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const targetSection = document.getElementById(pageId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            const targetBtn = document.querySelector(`.sidebar-item[data-page="${pageId}"]`);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+        }
+
+        // ========== 节日横幅 ==========
+        function getToday() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function closeBanner() {
+            document.getElementById('festival-banner').classList.add('hidden');
+            localStorage.setItem('site_banner_closed_' + getToday(), 'true');
+        }
+
+        // 完整节日库
+        const HOLIDAYS = [
+            { name: '元旦', icon: '🎆', month: 1, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #ef4444, #f97316)' },
+            { name: '春节', icon: '🧧', month: 1, day: 29, duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #991b1b, #dc2626)' },
+            { name: '元宵节', icon: '🏮', month: 2, day: 12, duration: 1, gradient: 'linear-gradient(90deg, #f59e0b, #ea580c)' },
+            { name: '清明节', icon: '🌿', month: 4, day: 4, duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' },
+            { name: '劳动节', icon: '🛠️', month: 5, day: 1, duration: 5, gradient: 'linear-gradient(90deg, #dc2626, #ea580c)' },
+            { name: '端午节', icon: '🐉', month: 5, day: 31, duration: 3, gradient: 'linear-gradient(90deg, #16a34a, #15803d)' },
+            { name: '七夕节', icon: '💕', month: 8, day: 29, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f472b6)' },
+            { name: '中秋节', icon: '🌕', month: 10, day: 6, duration: 3, gradient: 'linear-gradient(90deg, #f59e0b, #eab308, #ca8a04)' },
+            { name: '国庆节', icon: '🇨🇳', month: 10, day: 1, duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #ea580c, #ca8a04)' },
+            { name: '重阳节', icon: '🍂', month: 10, day: 29, duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)' },
+            { name: '冬至', icon: '❄️', month: 12, day: 21, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' },
+            { name: '情人节', icon: '❤️', month: 2, day: 14, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f43f5e)' },
+            { name: '妇女节', icon: '👩', month: 3, day: 8, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #d946ef)' },
+            { name: '愚人节', icon: '🤡', month: 4, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #a855f7, #8b5cf6)' },
+            { name: '复活节', icon: '🐰', month: 4, day: 20, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #c084fc)' },
+            { name: '地球日', icon: '🌍', month: 4, day: 22, duration: 1, gradient: 'linear-gradient(90deg, #22c55e, #3b82f6)' },
+            { name: '母亲节', icon: '💐', month: 5, day: 11, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #fb7185)' },
+            { name: '儿童节', icon: '🎈', month: 6, day: 1, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' },
+            { name: '父亲节', icon: '👨', month: 6, day: 15, duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #1d4ed8)' },
+            { name: '万圣节', icon: '🎃', month: 10, day: 31, duration: 1, gradient: 'linear-gradient(90deg, #f97316, #ea580c)' },
+            { name: '感恩节', icon: '🦃', month: 11, day: 27, duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)' },
+            { name: '平安夜', icon: '🎄', month: 12, day: 24, duration: 1, gradient: 'linear-gradient(90deg, #16a34a, #22c55e)' },
+            { name: '圣诞节', icon: '🎅', month: 12, day: 25, duration: 3, gradient: 'linear-gradient(90deg, #dc2626, #16a34a)' },
+            { name: '跨年夜', icon: '🎆', month: 12, day: 31, duration: 1, gradient: 'linear-gradient(90deg, #8b5cf6, #ec4899)' }
+        ];
+
+        function detectHoliday() {
+            const now = new Date();
+            const year = now.getFullYear();
+
+            for (const holiday of HOLIDAYS) {
+                const startDate = new Date(year, holiday.month - 1, holiday.day);
+                const endDate = new Date(startDate);
+                endDate.setDate(endDate.getDate() + holiday.duration - 1);
+
+                if (now >= startDate && now <= endDate) {
+                    return holiday;
+                }
+            }
+            return null;
+        }
+
+        function initBanner() {
+            const banner = document.getElementById('festival-banner');
+            const closedKey = 'site_banner_closed_' + getToday();
+
+            if (localStorage.getItem(closedKey) === 'true') {
+                banner.classList.add('hidden');
+                return;
+            }
+
+            const holiday = detectHoliday();
+            if (!holiday) {
+                banner.classList.add('hidden');
+                return;
+            }
+
+            document.getElementById('bannerIcon').textContent = holiday.icon;
+            document.getElementById('bannerText').textContent = holiday.name + '快乐！';
+            banner.style.background = holiday.gradient;
+            banner.classList.remove('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', initBanner);
+    </script>
 </body>
 </html>
