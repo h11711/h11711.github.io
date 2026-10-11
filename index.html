@@ -120,10 +120,16 @@
                             <span data-i18n="nav.blog">文章</span>
                         </button>
                     </li>
-                    <li class="inline-block lg:block">
+                    <li class="inline-block lg:block mr-2 lg:mr-0">
                         <button onclick="showPage('contact')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="contact">
                             <i class="fas fa-envelope w-5"></i>
                             <span data-i18n="nav.contact">联系</span>
+                        </button>
+                    </li>
+                    <li class="inline-block lg:block">
+                        <button onclick="showPage('copyright')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="copyright">
+                            <i class="fas fa-copyright w-5"></i>
+                            <span data-i18n="nav.copyright">版权</span>
                         </button>
                     </li>
                 </ul>
@@ -438,6 +444,54 @@
                 </div>
             </section>
 
+            <!-- ==================== 版权声明 ==================== -->
+            <section id="copyright" class="page-section p-8 lg:p-16">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="copyright.title">版权声明</h2>
+                    <p class="text-neutral-400 mb-12" data-i18n="copyright.subtitle">本站内容的使用与授权说明</p>
+
+                    <div class="space-y-8 text-neutral-300 leading-relaxed">
+
+                        <div class="p-6 bg-neutral-900 rounded-xl border border-neutral-800">
+                            <h3 class="text-xl font-bold text-white mb-3">网站内容</h3>
+                            <p class="text-sm text-neutral-400">
+                                本站所有原创文字、图片、代码及设计，版权归 Steve Huang 所有。
+                                未经许可，不得用于商业用途。转载请注明出处并附上原文链接。
+                            </p>
+                        </div>
+
+                        <div class="p-6 bg-neutral-900 rounded-xl border border-neutral-800">
+                            <h3 class="text-xl font-bold text-white mb-3">开源项目</h3>
+                            <p class="text-sm text-neutral-400">
+                                本站展示的开源项目遵循各自仓库中声明的开源协议（如 MIT、Apache 2.0 等）。
+                                使用时请以对应项目的 LICENSE 文件为准。
+                            </p>
+                        </div>
+
+                        <div class="p-6 bg-neutral-900 rounded-xl border border-neutral-800">
+                            <h3 class="text-xl font-bold text-white mb-3">第三方资源</h3>
+                            <p class="text-sm text-neutral-400">
+                                本站使用的图标来自 Font Awesome，样式框架为 Tailwind CSS，
+                                农历换算依赖 lunar-javascript，版权归各自作者所有。
+                            </p>
+                        </div>
+
+                        <div class="p-6 bg-neutral-900 rounded-xl border border-neutral-800">
+                            <h3 class="text-xl font-bold text-white mb-3">免责声明</h3>
+                            <p class="text-sm text-neutral-400">
+                                本站内容仅供参考，不对因使用本站信息而产生的任何直接或间接损失负责。
+                                外部链接的内容由对应网站负责，本站不对其准确性或合法性作出保证。
+                            </p>
+                        </div>
+
+                        <p class="text-sm text-neutral-500 pt-4 border-t border-neutral-800">
+                            © <span id="copyrightYear">2026</span> Steve Huang. All rights reserved.
+                        </p>
+
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
@@ -480,7 +534,7 @@
             { name: '七夕节', icon: '💕', month: 7,  day: 7,  duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f472b6)' },
             { name: '中秋节', icon: '🌕', month: 8,  day: 15, duration: 3, gradient: 'linear-gradient(90deg, #f59e0b, #eab308, #ca8a04)' },
             { name: '重阳节', icon: '🍂', month: 9,  day: 9,  duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)' },
-            { name: '冬至',   icon: '❄️', month: 11, day: 7,  duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' }, // 冬至按节气处理更准，见下方说明
+            { name: '冬至',   icon: '❄️', month: 11, day: 7,  duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' },
         ];
 
         // 公历节日（月、日均为公历）
@@ -489,7 +543,7 @@
             { name: '情人节', icon: '❤️', month: 2,  day: 14, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f43f5e)' },
             { name: '妇女节', icon: '👩', month: 3,  day: 8,  duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #d946ef)' },
             { name: '愚人节', icon: '🤡', month: 4,  day: 1,  duration: 1, gradient: 'linear-gradient(90deg, #a855f7, #8b5cf6)' },
-            { name: '清明节', icon: '🌿', month: 4,  day: 4,  duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' }, // 清明是节气，见下方说明
+            { name: '清明节', icon: '🌿', month: 4,  day: 4,  duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' },
             { name: '地球日', icon: '🌍', month: 4,  day: 22, duration: 1, gradient: 'linear-gradient(90deg, #22c55e, #3b82f6)' },
             { name: '劳动节', icon: '🛠️', month: 5,  day: 1,  duration: 5, gradient: 'linear-gradient(90deg, #dc2626, #ea580c)' },
             { name: '母亲节', icon: '💐', month: 5,  day: 11, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #fb7185)' },
@@ -504,42 +558,41 @@
         ];
 
         function detectHoliday() {
-        // 节气判断（清明、冬至等）
-        const jieQi = solar.getLunar().getJieQi(); // 返回当天节气名，如"清明"，无则返回空
-        if (jieQi === '清明') {
-            return { name: '清明节', icon: '🌿', duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' };
-        }
-        if (jieQi === '冬至') {
-            return { name: '冬至', icon: '❄️', duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' };
-        }
-                const now = new Date();
-                const solar = Solar.fromDate(now);
+            const now = new Date();
+            const solar = Solar.fromDate(now);
 
-        // 1) 先查农历节日
-        // 思路：看今天是否落在某个农历节日的持续区间内
-        for (const f of LUNAR_FESTIVALS) {
-            for (let offset = 0; offset < f.duration; offset++) {
-                // 以今天为基准，往前推 offset 天，看那天是不是节日的第 1 天
-                const startLunar = solar.next(-offset).getLunar();
-                if (startLunar.getMonth() === f.month && startLunar.getDay() === f.day) {
+            // 节气判断（清明、冬至等）
+            const jieQi = solar.getLunar().getJieQi();
+            if (jieQi === '清明') {
+                return { name: '清明节', icon: '🌿', duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' };
+            }
+            if (jieQi === '冬至') {
+                return { name: '冬至', icon: '❄️', duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' };
+            }
+
+            // 1) 先查农历节日
+            for (const f of LUNAR_FESTIVALS) {
+                for (let offset = 0; offset < f.duration; offset++) {
+                    const startLunar = solar.next(-offset).getLunar();
+                    if (startLunar.getMonth() === f.month && startLunar.getDay() === f.day) {
+                        return f;
+                    }
+                }
+            }
+
+            // 2) 再查公历节日
+            const y = now.getFullYear();
+            for (const f of SOLAR_FESTIVALS) {
+                const start = new Date(y, f.month - 1, f.day);
+                const end = new Date(start);
+                end.setDate(end.getDate() + f.duration - 1);
+                if (now >= start && now <= end) {
                     return f;
                 }
             }
-        }
 
-        // 2) 再查公历节日
-        const y = now.getFullYear();
-        for (const f of SOLAR_FESTIVALS) {
-            const start = new Date(y, f.month - 1, f.day);
-            const end = new Date(start);
-            end.setDate(end.getDate() + f.duration - 1);
-            if (now >= start && now <= end) {
-                return f;
-            }
+            return null;
         }
-
-        return null;
-    }
 
         function initBanner() {
             const banner = document.getElementById('festival-banner');
@@ -562,7 +615,10 @@
             banner.classList.remove('hidden');
         }
 
-        document.addEventListener('DOMContentLoaded', initBanner);
+        document.addEventListener('DOMContentLoaded', function () {
+            initBanner();
+            document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+        });
     </script>
 </body>
 </html>
