@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我把初中三年的学习资料整理成了一个仓库 - Steve Huang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+
+        .prose-custom h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #fff; }
+        .prose-custom h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #fff; }
+        .prose-custom p { margin-bottom: 1rem; line-height: 1.8; color: #d4d4d4; }
+        .prose-custom ul { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .prose-custom li { margin-bottom: 0.5rem; color: #d4d4d4; }
+        .prose-custom code { background: #262626; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.875rem; color: #e5e5e5; }
+        .prose-custom pre { background: #171717; padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1rem; border: 1px solid #262626; }
+        .prose-custom pre code { background: none; padding: 0; }
+        .prose-custom blockquote { border-left: 3px solid #404040; padding-left: 1rem; margin: 1.5rem 0; color: #a3a3a3; font-style: italic; }
+        .prose-custom a { color: #a3a3a3; text-decoration: underline; text-underline-offset: 2px; }
+        .prose-custom a:hover { color: #fff; }
+        .prose-custom img { border-radius: 8px; margin: 1.5rem 0; max-width: 100%; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #171717; }
+        ::-webkit-scrollbar-thumb { background: #404040; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- 顶部导航 -->
+    <nav class="sticky top-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-neutral-800">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="../../index.html" class="text-white font-bold text-lg hover:text-neutral-300 transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>Steve Huang
+            </a>
+            <div class="flex gap-4 text-sm text-neutral-400">
+                <a href="../../index.html#blog" class="hover:text-white transition-colors">文章列表</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章主体 -->
+    <article class="max-w-3xl mx-auto px-6 py-12">
+
+        <!-- 文章头部信息 -->
+        <header class="mb-12 border-b border-neutral-800 pb-8">
+            <div class="flex gap-2 mb-4">
+                <span class="text-xs px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-neutral-400">学习</span>
+                <span class="text-xs px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-neutral-400">开源</span>
+            </div>
+
+            <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                我把初中三年的学习资料整理成了一个仓库
+            </h1>
+
+            <div class="flex items-center gap-4 text-sm text-neutral-500">
+                <span><i class="far fa-calendar mr-1"></i>2026年10月11日</span>
+                <span><i class="far fa-clock mr-1"></i>阅读约 4 分钟</span>
+            </div>
+        </header>
+
+        <!-- 正文内容 -->
+        <div class="prose-custom">
+
+            <p>
+                初中三年攒下来的资料，散在网盘、U 盘、聊天记录和打印店里。
+                想找一份八下的地理评价卷，得翻半天。于是我把它们收拢到了一个 GitHub 仓库里。
+            </p>
+
+            <h2>仓库里有什么</h2>
+
+            <p>
+                按学科分目录，目前覆盖九科：
+            </p>
+
+            <ul>
+                <li>语文、数学、英语</li>
+                <li>物理、化学、生物学</li>
+                <li>历史、地理、道德与法治</li>
+            </ul>
+
+            <p>
+                文件以 PDF 为主，也有少量其他格式。
+                每个学科下面按资料类型再分一层，比如"资源与评价""试卷""笔记"之类。
+                完整的目录清单放在仓库根目录的 <code>STRUCTURE.txt</code> 里，想看全貌可以直接翻那个文件。
+            </p>
+
+            <h2>为什么有些文件不在仓库里</h2>
+
+            <p>
+                部分 PDF 体积不小，直接塞进 Git 会让仓库越来越臃肿，克隆一次要等很久。
+                所以这些文件改成放在外部存储服务上，仓库里保留一个说明文件，指向对应的下载链接。
+            </p>
+
+            <p>
+                比如这一条：
+            </p>
+
+            <pre><code>/地理/资源与评价/2025资源评价八下地理.pdf
+==> 本文件指向外部存储服务
+==> https://1832674303.share.123pan.cn/...</code></pre>
+
+            <p>
+                打开仓库里的同名文件，就能看到跳转链接。
+                这样仓库本身保持轻量，资料又不会丢。
+            </p>
+
+            <h2>怎么用</h2>
+
+            <p>
+                直接浏览或者克隆都行：
+            </p>
+
+            <pre><code>git clone https://github.com/h11711/junior-high-materials.git</code></pre>
+
+            <p>
+                然后按学科进入对应目录。找资料之前建议先看一眼 <code>STRUCTURE.txt</code>，
+                比一个个点进去快。
+            </p>
+
+            <h2>几点说明</h2>
+
+            <ul>
+                <li>仓库只做整理和备份，不保证资料的完整性和时效性</li>
+                <li>资料版权归原作者和出版方所有，如有侵权请联系删除</li>
+                <li>请勿用于商业用途</li>
+            </ul>
+
+            <h2>最后</h2>
+
+            <p>
+                整理这件事本身没什么技术含量，就是把散的东西归到一处。
+                但整理完之后，找一份资料从"翻十分钟"变成"点两下"，这个差别还是挺大的。
+            </p>
+
+            <p>
+                如果你也在读初中，或者家里有正在读初中的孩子，这个仓库的结构可以直接拿去用。
+                仓库地址：<a href="https://github.com/h11711/junior-high-materials" target="_blank" rel="noopener">github.com/h11711/junior-high-materials</a>
+            </p>
+
+        </div>
+
+        <!-- 文章底部 -->
+        <footer class="mt-16 pt-8 border-t border-neutral-800">
+
+            <!-- 上下篇导航 -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <a href="#" class="group p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors">
+                    <div class="text-xs text-neutral-500 mb-1">← 上一篇</div>
+                    <div class="text-white group-hover:text-neutral-300 transition-colors">暂无更早的文章</div>
+                </a>
+                <a href="#" class="group p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-neutral-600 transition-colors text-right">
+                    <div class="text-xs text-neutral-500 mb-1">下一篇 →</div>
+                    <div class="text-white group-hover:text-neutral-300 transition-colors">暂无更新的文章</div>
+                </a>
+            </div>
+        </footer>
+
+    </article>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-neutral-800 mt-16 py-8 text-center text-sm text-neutral-600">
+        <p>© 2026 Steve Huang. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
