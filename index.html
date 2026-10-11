@@ -50,23 +50,12 @@
             color: #fff;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #171717;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #404040;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #525252;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #171717; }
+        ::-webkit-scrollbar-thumb { background: #404040; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #525252; }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
     </style>
 
     <link rel="alternate" type="application/rss+xml" title="Steve Huang" href="https://stevehuang.eu.org/rss/rss.xml">
@@ -85,13 +74,12 @@
         </button>
     </div>
 
-    <!-- 桌面端：左侧边栏 | 移动端：顶部导航 -->
     <div class="flex h-full flex-col lg:flex-row">
 
         <!-- 导航栏/侧边栏 -->
         <nav id="sidebar" class="bg-neutral-900 border-r border-neutral-800 lg:w-64 w-full lg:h-full flex-shrink-0 flex flex-col">
             <div class="p-6 border-b border-neutral-800">
-                <h1 class="text-2xl font-bold tracking-wider text-white" data-i18n="siteName">Steve Huang</h1>
+                <h1 class="text-2xl font-bold tracking-wider text-white">Steve Huang</h1>
             </div>
 
             <div class="flex-1 overflow-y-auto py-4">
@@ -99,37 +87,37 @@
                     <li class="inline-block lg:block mr-2 lg:mr-0">
                         <button onclick="showPage('home')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3 active" data-page="home">
                             <i class="fas fa-home w-5"></i>
-                            <span data-i18n="nav.home">首页</span>
+                            <span>首页</span>
                         </button>
                     </li>
                     <li class="inline-block lg:block mr-2 lg:mr-0">
                         <button onclick="showPage('about')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="about">
                             <i class="fas fa-user w-5"></i>
-                            <span data-i18n="nav.about">关于</span>
+                            <span>关于</span>
                         </button>
                     </li>
                     <li class="inline-block lg:block mr-2 lg:mr-0">
-                        <button onclick="showPage('works')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="works">
+                        <button onclick="showPage('works-archive')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="works-archive">
                             <i class="fas fa-briefcase w-5"></i>
-                            <span data-i18n="nav.works">作品</span>
+                            <span>作品</span>
                         </button>
                     </li>
                     <li class="inline-block lg:block mr-2 lg:mr-0">
-                        <button onclick="showPage('blog')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="blog">
+                        <button onclick="showPage('blog-archive')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="blog-archive">
                             <i class="fas fa-pen-nib w-5"></i>
-                            <span data-i18n="nav.blog">文章</span>
+                            <span>文章</span>
                         </button>
                     </li>
                     <li class="inline-block lg:block mr-2 lg:mr-0">
                         <button onclick="showPage('contact')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="contact">
                             <i class="fas fa-envelope w-5"></i>
-                            <span data-i18n="nav.contact">联系</span>
+                            <span>联系</span>
                         </button>
                     </li>
                     <li class="inline-block lg:block">
                         <button onclick="showPage('copyright')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg text-neutral-300 hover:text-white flex items-center gap-3" data-page="copyright">
                             <i class="fas fa-copyright w-5"></i>
-                            <span data-i18n="nav.copyright">版权</span>
+                            <span>版权</span>
                         </button>
                     </li>
                 </ul>
@@ -142,19 +130,27 @@
             <!-- ==================== 首页 ==================== -->
             <section id="home" class="page-section active p-8 lg:p-16 flex flex-col justify-center">
                 <div class="max-w-4xl">
-                    <h2 class="text-5xl lg:text-7xl font-bold mb-6 text-white tracking-tight" data-i18n="home.title">
+                    <h2 class="text-5xl lg:text-7xl font-bold mb-6 text-white tracking-tight">
                         Steve Huang
                     </h2>
-                    <p class="text-xl lg:text-2xl text-neutral-400 mb-8 leading-relaxed" data-i18n="home.subtitle">
+                    <p class="text-xl lg:text-2xl text-neutral-400 mb-8 leading-relaxed">
                         欢迎访问Steve的个人网站！
                     </p>
+                    <div class="flex gap-4">
+                        <button onclick="showPage('blog-archive')" class="px-6 py-3 bg-neutral-800 hover:bg-neutral-700 rounded-full text-sm transition-colors">
+                            阅读文章
+                        </button>
+                        <button onclick="showPage('works-archive')" class="px-6 py-3 border border-neutral-700 hover:bg-neutral-900 rounded-full text-sm transition-colors">
+                            查看作品
+                        </button>
+                    </div>
                 </div>
             </section>
 
             <!-- ==================== 关于页面 ==================== -->
             <section id="about" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto">
-                    <h2 class="text-4xl font-bold mb-12 text-white" data-i18n="about.title">关于我</h2>
+                    <h2 class="text-4xl font-bold mb-12 text-white">关于我</h2>
 
                     <div class="grid md:grid-cols-2 gap-12 items-start">
                         <div class="aspect-square bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800">
@@ -163,19 +159,19 @@
 
                         <div class="space-y-6">
                             <div class="prose prose-invert">
-                                <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p1">
+                                <p class="text-lg text-neutral-300 leading-relaxed">
                                     在这里写第一段自我介绍，包括你的背景、教育经历或职业历程。
                                 </p>
-                                <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p2">
+                                <p class="text-lg text-neutral-300 leading-relaxed">
                                     在这里写第二段，描述你的专业技能、工作方式或独特价值主张。
                                 </p>
-                                <p class="text-lg text-neutral-300 leading-relaxed" data-i18n="about.p3">
+                                <p class="text-lg text-neutral-300 leading-relaxed">
                                     在这里写第三段，谈谈你的兴趣爱好、职业目标或个人哲学。
                                 </p>
                             </div>
 
                             <div class="pt-6">
-                                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4" data-i18n="about.skills">爱好</h3>
+                                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4">爱好</h3>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">HTML</span>
                                     <span class="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-full text-sm">英语</span>
@@ -189,146 +185,35 @@
                 </div>
             </section>
 
-            <!-- ==================== 作品展示 ==================== -->
-            <section id="works" class="page-section p-8 lg:p-16">
+            <!-- ==================== 作品归档 ==================== -->
+            <section id="works-archive" class="page-section p-8 lg:p-16">
                 <div class="max-w-6xl mx-auto">
-                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="works.title">作品展示</h2>
-                    <p class="text-neutral-400 mb-12" data-i18n="works.subtitle">精选项目与创作</p>
+                    <h2 class="text-4xl font-bold mb-4 text-white">作品归档</h2>
+                    <p class="text-neutral-400 mb-12">全部项目与创作，按时间从新到旧排列</p>
 
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                        <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
-                            <div class="aspect-video bg-neutral-800 overflow-hidden">
-                                <img src="https://stevehuang.eu.org/img/proj/manganese/1.JPG" alt="Project 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2 group-hover:text-white transition-colors" data-i18n="works.p1.title">Manganese(锰)</h3>
-                                <p class="text-neutral-400 text-sm mb-4 line-clamp-2" data-i18n="works.p1.desc">艾宾浩斯词汇记忆工具</p>
-                                <div class="flex gap-2 mb-4">
-                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">React</span>
-                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Node.js</span>
-                                </div>
-                                <a href="https://stevehuang.eu.org/project/manganese/" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
-                                    <span data-i18n="works.view">查看详情</span>
-                                    <i class="fas fa-arrow-right text-xs"></i>
-                                </a>
-                            </div>
-                        </article>
-
-                        <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
-                            <div class="aspect-video bg-neutral-800 overflow-hidden">
-                                <img src="PROJECT2_IMAGE_URL" alt="Project 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2" data-i18n="works.p2.title">项目名称 2</h3>
-                                <p class="text-neutral-400 text-sm mb-4 line-clamp-2" data-i18n="works.p2.desc">项目简短描述。</p>
-                                <div class="flex gap-2 mb-4">
-                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Python</span>
-                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">AI</span>
-                                </div>
-                                <a href="#" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
-                                    <span data-i18n="works.view">查看详情</span>
-                                    <i class="fas fa-arrow-right text-xs"></i>
-                                </a>
-                            </div>
-                        </article>
-
-                        <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
-                            <div class="aspect-video bg-neutral-800 overflow-hidden">
-                                <img src="PROJECT3_IMAGE_URL" alt="Project 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2" data-i18n="works.p3.title">项目名称 3</h3>
-                                <p class="text-neutral-400 text-sm mb-4 line-clamp-2" data-i18n="works.p3.desc">项目简短描述。</p>
-                                <div class="flex gap-2 mb-4">
-                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Design</span>
-                                    <span class="text-xs px-2 py-1 bg-neutral-800 rounded">Figma</span>
-                                </div>
-                                <a href="#" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
-                                    <span data-i18n="works.view">查看详情</span>
-                                    <i class="fas fa-arrow-right text-xs"></i>
-                                </a>
-                            </div>
-                        </article>
-
+                    <div id="project-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <p class="text-neutral-500 text-sm col-span-full">加载中……</p>
                     </div>
                 </div>
             </section>
 
-            <!-- ==================== 文章更新 ==================== -->
-            <section id="blog" class="page-section p-8 lg:p-16">
+            <!-- ==================== 文章归档 ==================== -->
+            <section id="blog-archive" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto">
-                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="blog.title">最新文章</h2>
-                    <p class="text-neutral-400 mb-12" data-i18n="blog.subtitle">思考、教程与分享</p>
+                    <h2 class="text-4xl font-bold mb-4 text-white">文章归档</h2>
+                    <p class="text-neutral-400 mb-12">全部文章，按时间从新到旧排列</p>
 
-                    <div class="space-y-8">
-
-                        <article class="group border-b border-neutral-800 pb-8">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                                <span class="text-sm text-neutral-500">2026年10月11日</span>
-                                <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">学习</span>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-3 group-hover:text-neutral-300 transition-colors cursor-pointer" data-i18n="blog.a1.title">
-                                初中学习资料整理
-                            </h3>
-                            <p class="text-neutral-400 mb-4 line-clamp-2" data-i18n="blog.a1.excerpt">
-                                初中资料备份整理分享
-                            </p>
-                            <a href="#" class="text-sm text-neutral-300 hover:text-white inline-flex items-center gap-2">
-                                <span data-i18n="blog.readMore">阅读全文</span>
-                                <i class="fas fa-arrow-right text-xs"></i>
-                            </a>
-                        </article>
-
-                        <article class="group border-b border-neutral-800 pb-8">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                                <span class="text-sm text-neutral-500">2024年1月10日</span>
-                                <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">设计</span>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-3 group-hover:text-neutral-300 transition-colors cursor-pointer" data-i18n="blog.a2.title">
-                                设计系统的艺术：从0到1构建组件库
-                            </h3>
-                            <p class="text-neutral-400 mb-4 line-clamp-2" data-i18n="blog.a2.excerpt">
-                                文章摘要内容...
-                            </p>
-                            <a href="#" class="text-sm text-neutral-300 hover:text-white inline-flex items-center gap-2">
-                                <span data-i18n="blog.readMore">阅读全文</span>
-                                <i class="fas fa-arrow-right text-xs"></i>
-                            </a>
-                        </article>
-
-                        <article class="group border-b border-neutral-800 pb-8">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                                <span class="text-sm text-neutral-500">2024年1月5日</span>
-                                <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">随笔</span>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-3 group-hover:text-neutral-300 transition-colors cursor-pointer" data-i18n="blog.a3.title">
-                                远程工作三年的心得与反思
-                            </h3>
-                            <p class="text-neutral-400 mb-4 line-clamp-2" data-i18n="blog.a3.excerpt">
-                                文章摘要内容...
-                            </p>
-                            <a href="#" class="text-sm text-neutral-300 hover:text-white inline-flex items-center gap-2">
-                                <span data-i18n="blog.readMore">阅读全文</span>
-                                <i class="fas fa-arrow-right text-xs"></i>
-                            </a>
-                        </article>
-
-                    </div>
-
-                    <div class="mt-12 text-center">
-                        <button class="px-6 py-3 border border-neutral-700 rounded-full hover:bg-neutral-900 transition-colors text-sm" data-i18n="blog.loadMore">
-                            加载更多文章
-                        </button>
+                    <div id="article-list">
+                        <p class="text-neutral-500 text-sm">加载中……</p>
                     </div>
                 </div>
             </section>
 
             <!-- ==================== 联系方式 ==================== -->
-            <section id="contact" class="page-section p-8 lg:p-16 flex flex-col justify-center">
+            <section id="contact" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto w-full">
-                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="contact.title">联系我</h2>
-                    <p class="text-neutral-400 mb-12" data-i18n="contact.subtitle">有项目合作或想法交流？随时联系我</p>
+                    <h2 class="text-4xl font-bold mb-4 text-white">联系我</h2>
+                    <p class="text-neutral-400 mb-12">有项目合作或想法交流？随时联系我</p>
 
                     <div class="grid md:grid-cols-2 gap-12">
                         <div class="space-y-8">
@@ -338,7 +223,7 @@
                                         <i class="fas fa-envelope text-xl"></i>
                                     </div>
                                     <div>
-                                        <div class="text-sm text-neutral-500" data-i18n="contact.email">邮箱</div>
+                                        <div class="text-sm text-neutral-500">邮箱</div>
                                         <div class="font-semibold">steveh11711@outlook.com</div>
                                     </div>
                                 </a>
@@ -348,14 +233,14 @@
                                         <i class="fas fa-phone text-xl"></i>
                                     </div>
                                     <div>
-                                        <div class="text-sm text-neutral-500" data-i18n="contact.phone">电话</div>
+                                        <div class="text-sm text-neutral-500">电话</div>
                                         <div class="font-semibold">+86 158 4605 2919</div>
                                     </div>
                                 </a>
                             </div>
 
                             <div>
-                                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4" data-i18n="contact.social">社交媒体</h3>
+                                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4">社交媒体</h3>
                                 <div class="grid grid-cols-4 gap-4">
                                     <a href="social/wx.html" target="_blank" class="social-icon flex flex-col items-center gap-2 p-4 bg-neutral-900 rounded-xl border border-neutral-800 hover:border-green-600 hover:text-green-500 transition-all group">
                                         <i class="fab fa-weixin text-2xl"></i>
@@ -447,8 +332,8 @@
             <!-- ==================== 版权声明 ==================== -->
             <section id="copyright" class="page-section p-8 lg:p-16">
                 <div class="max-w-4xl mx-auto">
-                    <h2 class="text-4xl font-bold mb-4 text-white" data-i18n="copyright.title">版权声明</h2>
-                    <p class="text-neutral-400 mb-12" data-i18n="copyright.subtitle">本站内容的使用与授权说明</p>
+                    <h2 class="text-4xl font-bold mb-4 text-white">版权声明</h2>
+                    <p class="text-neutral-400 mb-12">本站内容的使用与授权说明</p>
 
                     <div class="space-y-8 text-neutral-300 leading-relaxed">
 
@@ -486,7 +371,7 @@
                         </div>
 
                         <p class="text-sm text-neutral-500 pt-4 border-t border-neutral-800">
-                            © <span id="copyrightYear">2026</span> Steve Huang. 保留一切权利.
+                            © <span id="copyrightYear">2026</span> Steve Huang. All rights reserved.
                         </p>
 
                     </div>
@@ -507,13 +392,92 @@
             });
 
             const targetSection = document.getElementById(pageId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
+            if (targetSection) targetSection.classList.add('active');
 
             const targetBtn = document.querySelector(`.sidebar-item[data-page="${pageId}"]`);
-            if (targetBtn) {
-                targetBtn.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
+        }
+
+        // ========== 文章归档：读 articles.json ==========
+        function formatDate(str) {
+            const [y, m, d] = str.split('-');
+            return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+        }
+
+        async function loadArticles() {
+            const container = document.getElementById('article-list');
+            if (!container) return;
+
+            try {
+                const res = await fetch('articles.json');
+                if (!res.ok) throw new Error('articles.json 加载失败');
+                const articles = await res.json();
+                articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                const groups = {};
+                articles.forEach(a => {
+                    const year = a.date.slice(0, 4);
+                    if (!groups[year]) groups[year] = [];
+                    groups[year].push(a);
+                });
+
+                const years = Object.keys(groups).sort((a, b) => b - a);
+                container.innerHTML = years.map(year => `
+                    <div class="mb-10">
+                        <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-4 border-b border-neutral-800 pb-2">${year} 年</h3>
+                        ${groups[year].map(a => `
+                            <article class="group border-b border-neutral-800 pb-6 mb-6">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                                    <span class="text-sm text-neutral-500">${formatDate(a.date)}</span>
+                                    <span class="text-xs px-2 py-1 bg-neutral-900 border border-neutral-700 rounded w-fit mt-2 md:mt-0">${a.tags?.[0] || ''}</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 group-hover:text-neutral-300 transition-colors">
+                                    <a href="${a.url}">${a.title}</a>
+                                </h4>
+                                <p class="text-neutral-400 text-sm mb-3 line-clamp-2">${a.excerpt || ''}</p>
+                            </article>
+                        `).join('')}
+                    </div>
+                `).join('');
+
+            } catch (e) {
+                container.innerHTML = `<p class="text-neutral-500 text-sm">文章列表加载失败：${e.message}</p>`;
+                console.error(e);
+            }
+        }
+
+        // ========== 作品归档：读 projects.json ==========
+        async function loadProjects() {
+            const container = document.getElementById('project-list');
+            if (!container) return;
+
+            try {
+                const res = await fetch('projects.json');
+                if (!res.ok) throw new Error('projects.json 加载失败');
+                const projects = await res.json();
+                projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                container.innerHTML = projects.map(p => `
+                    <article class="group relative bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-neutral-600 transition-colors">
+                        <div class="aspect-video bg-neutral-800 overflow-hidden">
+                            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-white transition-colors">${p.title}</h3>
+                            <p class="text-neutral-400 text-sm mb-4 line-clamp-2">${p.excerpt || ''}</p>
+                            <div class="flex gap-2 mb-4">
+                                ${(p.tags || []).map(t => `<span class="text-xs px-2 py-1 bg-neutral-800 rounded">${t}</span>`).join('')}
+                            </div>
+                            <a href="${p.url}" class="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors">
+                                查看详情 <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </article>
+                `).join('');
+
+            } catch (e) {
+                container.innerHTML = `<p class="text-neutral-500 text-sm col-span-full">作品列表加载失败：${e.message}</p>`;
+                console.error(e);
             }
         }
 
@@ -527,7 +491,6 @@
             localStorage.setItem('site_banner_closed_' + getToday(), 'true');
         }
 
-        // 农历节日（月、日均为农历）
         const LUNAR_FESTIVALS = [
             { name: '春节',   icon: '🧧', month: 1,  day: 1,  duration: 7, gradient: 'linear-gradient(90deg, #dc2626, #991b1b, #dc2626)' },
             { name: '元宵节', icon: '🏮', month: 1,  day: 15, duration: 1, gradient: 'linear-gradient(90deg, #f59e0b, #ea580c)' },
@@ -535,16 +498,13 @@
             { name: '七夕节', icon: '💕', month: 7,  day: 7,  duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f472b6)' },
             { name: '中秋节', icon: '🌕', month: 8,  day: 15, duration: 3, gradient: 'linear-gradient(90deg, #f59e0b, #eab308, #ca8a04)' },
             { name: '重阳节', icon: '🍂', month: 9,  day: 9,  duration: 1, gradient: 'linear-gradient(90deg, #d97706, #b45309)' },
-            { name: '冬至',   icon: '❄️', month: 11, day: 7,  duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' },
         ];
 
-        // 公历节日（月、日均为公历）
         const SOLAR_FESTIVALS = [
             { name: '元旦',   icon: '🎆', month: 1,  day: 1,  duration: 1, gradient: 'linear-gradient(90deg, #ef4444, #f97316)' },
             { name: '情人节', icon: '❤️', month: 2,  day: 14, duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #f43f5e)' },
             { name: '妇女节', icon: '👩', month: 3,  day: 8,  duration: 1, gradient: 'linear-gradient(90deg, #ec4899, #d946ef)' },
             { name: '愚人节', icon: '🤡', month: 4,  day: 1,  duration: 1, gradient: 'linear-gradient(90deg, #a855f7, #8b5cf6)' },
-            { name: '清明节', icon: '🌿', month: 4,  day: 4,  duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' },
             { name: '地球日', icon: '🌍', month: 4,  day: 22, duration: 1, gradient: 'linear-gradient(90deg, #22c55e, #3b82f6)' },
             { name: '劳动节', icon: '🛠️', month: 5,  day: 1,  duration: 5, gradient: 'linear-gradient(90deg, #dc2626, #ea580c)' },
             { name: '母亲节', icon: '💐', month: 5,  day: 11, duration: 1, gradient: 'linear-gradient(90deg, #f472b6, #fb7185)' },
@@ -562,7 +522,6 @@
             const now = new Date();
             const solar = Solar.fromDate(now);
 
-            // 节气判断（清明、冬至等）
             const jieQi = solar.getLunar().getJieQi();
             if (jieQi === '清明') {
                 return { name: '清明节', icon: '🌿', duration: 3, gradient: 'linear-gradient(90deg, #22c55e, #16a34a)' };
@@ -571,7 +530,6 @@
                 return { name: '冬至', icon: '❄️', duration: 1, gradient: 'linear-gradient(90deg, #3b82f6, #60a5fa)' };
             }
 
-            // 1) 先查农历节日
             for (const f of LUNAR_FESTIVALS) {
                 for (let offset = 0; offset < f.duration; offset++) {
                     const startLunar = solar.next(-offset).getLunar();
@@ -581,15 +539,12 @@
                 }
             }
 
-            // 2) 再查公历节日
             const y = now.getFullYear();
             for (const f of SOLAR_FESTIVALS) {
                 const start = new Date(y, f.month - 1, f.day);
                 const end = new Date(start);
                 end.setDate(end.getDate() + f.duration - 1);
-                if (now >= start && now <= end) {
-                    return f;
-                }
+                if (now >= start && now <= end) return f;
             }
 
             return null;
@@ -619,11 +574,9 @@
         document.addEventListener('DOMContentLoaded', function () {
             initBanner();
             document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+            loadArticles();
+            loadProjects();
         });
     </script>
-
-    <!-- Elfsight Website Translator -->
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-3f7fa185-d824-4fac-a62d-661c8c6976d7" data-elfsight-app-lazy></div>
 </body>
 </html>
